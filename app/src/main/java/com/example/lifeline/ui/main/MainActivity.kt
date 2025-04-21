@@ -10,7 +10,7 @@ import com.example.lifeline.util.HealthConnectManager
 import com.example.lifeline.data.repository.HealthRepository
 import com.example.lifeline.R
 import com.example.lifeline.presentation.login.LoginActivity
-import com.example.lifeline.presentation.signup.SignupActivity
+import com.example.lifeline.ui.signup.SignupActivity
 import com.example.lifeline.ui.main.MainViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
