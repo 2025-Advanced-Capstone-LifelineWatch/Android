@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <solid android:color="@color/signature_1" />
+
+    <!-- 원하는 radius로 설정 (예: 상단만 둥글게) -->
+    <corners
+        android:radius="30dp" />
+</shape>
