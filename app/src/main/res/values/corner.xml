@@ -1,0 +1,13 @@
+<resources>
+    <style name="RoundedButtonShape">
+        <item name="cornerFamily">rounded</item> <!-- 둥근 모서리 설정 -->
+        <item name="cornerSize">30dp</item>     <!-- 모서리 크기 30dp -->
+    </style>
+
+    <style name="RoundedButton">
+        <item name="android:backgroundTint">@color/gray</item>  <!-- 배경 색상 -->
+        <item name="android:textColor">@color/black</item>  <!-- 텍스트 색상 -->
+        <item name="android:textSize">60sp</item>  <!-- 텍스트 크기 -->
+        <item name="shapeAppearance">@style/RoundedButtonShape</item>  <!-- 둥근 모서리 스타일 적용 -->
+    </style>
+</resources>
