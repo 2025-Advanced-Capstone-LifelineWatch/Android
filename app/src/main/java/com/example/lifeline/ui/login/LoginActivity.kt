@@ -1,4 +1,4 @@
-package com.example.lifeline.presentation.login
+package com.example.lifeline.ui.login
 
 import android.content.Intent
 import android.os.Bundle
