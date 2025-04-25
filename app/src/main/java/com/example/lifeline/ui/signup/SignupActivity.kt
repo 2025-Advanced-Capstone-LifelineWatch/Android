@@ -4,9 +4,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.lifeline.R
 import androidx.fragment.app.Fragment
-import com.example.lifeline.presentation.signup.SignupStep1Fragment
-import com.example.lifeline.presentation.signup.SignupStep2Fragment
-import com.example.lifeline.presentation.signup.SignupStep3Fragment
+import com.example.lifeline.ui.signup.fragments.SignupStep1Fragment
+import com.example.lifeline.ui.signup.fragments.SignupStep2Fragment
+import com.example.lifeline.ui.signup.fragments.SignupStep3Fragment
 
 class SignupActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

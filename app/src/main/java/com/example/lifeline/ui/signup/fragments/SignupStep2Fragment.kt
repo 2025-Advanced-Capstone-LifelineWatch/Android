@@ -1,5 +1,5 @@
 // SignupStep2Fragment.kt
-package com.example.lifeline.presentation.signup
+package com.example.lifeline.ui.signup.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater

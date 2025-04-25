@@ -12,7 +12,7 @@ class HealthRepository(
     fun getClient(): HealthConnectClient = manager.getClient()
 
     suspend fun hasPermissions(client: HealthConnectClient): Boolean {
-        val granted = manager.getGrantedPermissions(client)
+        val granted = manager.getGrantedPermissions()
         return granted.containsAll(HealthConnectManager.REQUIRED_PERMISSIONS)
     }
 }
