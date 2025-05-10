@@ -144,33 +144,16 @@
     </LinearLayout>
 
     <!-- 사회복지사 항목 2 -->
-    <LinearLayout
-        android:id="@+id/layout_worker2"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@id/layout_worker1">
 
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/ic_placeholder"
-            android:layout_marginEnd="8dp"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="김영희 사회복지사\n02-987-6543"
-            android:textSize="14sp"/>
-    </LinearLayout>
+    <!-- 약 알람 버튼들 -->
 
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar3"
         android:layout_width="95dp"
         android:layout_height="30dp"
-        android:layout_marginTop="365dp"
+        android:layout_marginTop="332dp"
         android:background="@drawable/rounded_toolbar_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -189,22 +172,22 @@
 
     </com.google.android.material.appbar.MaterialToolbar>
 
-    <!-- 약 알람 버튼들 -->
     <LinearLayout
         android:id="@+id/layout_medicine_buttons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
         android:gravity="center"
         android:orientation="horizontal"
+        android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar3">
 
         <Button
             android:id="@+id/btn_medicine"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_weight="1"
             android:background="@drawable/button_white_rounded"
             android:text="💊 약 복용" />
@@ -212,19 +195,18 @@
         <Button
             android:id="@+id/btn_timer"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_marginStart="16dp"
             android:layout_weight="1"
             android:background="@drawable/button_white_rounded"
             android:text="⏰ 시간 설정" />
     </LinearLayout>
 
-
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar4"
         android:layout_width="180dp"
         android:layout_height="30dp"
-        android:layout_marginTop="470dp"
+        android:layout_marginTop="440dp"
         android:background="@drawable/rounded_toolbar_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -244,14 +226,15 @@
     </com.google.android.material.appbar.MaterialToolbar>
 
 
+    <!-- 보호자 정보 -->
     <LinearLayout
         android:id="@+id/layout_myinfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="109dp"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar3"
-        tools:layout_editor_absoluteX="20dp">
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar4"
+        tools:layout_editor_absoluteX="16dp">
 
         <ImageView
             android:layout_width="48dp"
@@ -284,7 +267,6 @@
         </LinearLayout>
     </LinearLayout>
 
-    <!-- 보호자 정보 -->
     <LinearLayout
         android:id="@+id/layout_guardian"
         android:orientation="horizontal"
@@ -323,29 +305,33 @@
         android:id="@+id/health"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="630dp"
+        android:layout_marginTop="593dp"
         android:gravity="center"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <Button
-            android:id="@+id/blood_pressure"
-            android:layout_width="0dp"
+            android:id="@+id/health_check"
+            android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/button_white_rounded"
-            android:text="혈압 관리" />
+            android:text="건강 관리" />
 
         <Button
-            android:id="@+id/test2"
-            android:layout_width="0dp"
+            android:id="@+id/my_page"
+            android:layout_width="320dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_weight="1"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="2"
             android:background="@drawable/button_white_rounded"
-            android:text="test2" />
+            android:text="마이 페이지"/>
+
+
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
