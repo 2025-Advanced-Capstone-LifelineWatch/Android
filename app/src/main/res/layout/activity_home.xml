@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F8F9FA"
     android:padding="20dp">
 
     <com.google.android.material.appbar.MaterialToolbar
@@ -56,7 +57,7 @@
         android:id="@+id/tv_user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="85dp"
         android:layout_marginEnd="204dp"
         android:text="김건우"
         android:textSize="18sp"
@@ -153,7 +154,7 @@
         android:id="@+id/toolbar3"
         android:layout_width="95dp"
         android:layout_height="30dp"
-        android:layout_marginTop="332dp"
+        android:layout_marginTop="310dp"
         android:background="@drawable/rounded_toolbar_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -178,7 +179,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -186,17 +187,21 @@
 
         <Button
             android:id="@+id/btn_medicine"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="1dp"
             android:background="@drawable/button_white_rounded"
             android:text="💊 약 복용" />
 
         <Button
             android:id="@+id/btn_timer"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginBottom="3dp"
+            android:layout_marginTop="1dp"
             android:layout_weight="1"
             android:background="@drawable/button_white_rounded"
             android:text="⏰ 시간 설정" />
@@ -206,7 +211,7 @@
         android:id="@+id/toolbar4"
         android:layout_width="180dp"
         android:layout_height="30dp"
-        android:layout_marginTop="440dp"
+        android:layout_marginTop="420dp"
         android:background="@drawable/rounded_toolbar_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -303,9 +308,9 @@
 
     <LinearLayout
         android:id="@+id/health"
-        android:layout_width="match_parent"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="593dp"
+        android:layout_marginTop="575dp"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
@@ -324,8 +329,8 @@
             android:id="@+id/my_page"
             android:layout_width="320dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="3dp"
             android:layout_weight="2"
             android:background="@drawable/button_white_rounded"
             android:text="마이 페이지"/>

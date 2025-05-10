@@ -1,6 +1,14 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("org.jetbrains.kotlin.plugin.compose") version "2.1.0"
+
+}
+
+buildscript {
+    dependencies {
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.0")
+    }
 }
 
 android {
@@ -40,7 +48,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
     }
     packaging {
         resources {
@@ -50,6 +58,7 @@ android {
 }
 
 dependencies {
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -59,6 +68,8 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.firebase.crashlytics.buildtools)
+    implementation(libs.places)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

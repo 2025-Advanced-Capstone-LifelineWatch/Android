@@ -1,11 +1,27 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.health.READ_HEART_RATE"/>
+
+    <uses-permission android:name="android.permission.health.READ_BLOOD_PRESSURE" /> <!-- 혈압-->
+    <uses-permission android:name="android.permission.health.WRITE_BLOOD_PRESSURE"/>
+
+    <uses-permission android:name="android.permission.health.READ_HEART_RATE"/> <!-- 심박수 -->
     <uses-permission android:name="android.permission.health.WRITE_HEART_RATE"/>
-    <uses-permission android:name="android.permission.health.READ_STEPS"/>
+
+    <uses-permission android:name="android.permission.health.READ_OXYGEN_SATURATION"/> <!-- 산소포화도 -->
+    <uses-permission android:name="android.permission.health.WRITE_OXYGEN_SATURATION"/> <!-- 산소포화도 -->
+
+
+    <uses-permission android:name="android.permission.health.READ_STEPS"/> <!-- 걸음수 -->
     <uses-permission android:name="android.permission.health.WRITE_STEPS"/>
-    <uses-permission android:name="android.permission.health.READ_BLOOD_PRESSURE" />
+
+    <uses-permission android:name="android.permission.health.READ_ACTIVE_CALORIES_BURNED"/> <!-- 활성 칼로리 -->
+    <uses-permission android:name="android.permission.health.READ_TOTAL_CALORIES_BURNED"/> <!-- 총 칼로리 -->
+
+    <uses-permission android:name="android.permission.health.READ_ACTIVITY_INTENSITY"/> <!-- 활동 강도 -->
+    <uses-permission android:name="android.permission.READ_RESPIRATORY_RATE"/>     <!-- 호흡수 -->
+    <uses-permission android:name="android.permission.health.READ_BASAL_BODY_TEMPERATURE" /> <!--체온 -->
+
 
     <queries>
         <package android:name="com.google.android.apps.healthdata" />
@@ -51,8 +67,14 @@
         <activity android:name=".ui.signup.SignupActivity"/>
         <activity android:name=".ui.login.LoginActivity" />
         <activity android:name=".ui.home.HomeActivity"/>
-        <activity android:name=".ui.monitor.BloodPressureActivity"/>
         <activity android:name=".ui.mypage.MyPageActivity"/>
+        <activity android:name=".ui.healthmanage.HealthManageActivity" />
+        <activity android:name=".ui.monitor.BloodPressureActivity"/>
+        <activity android:name=".ui.monitor.TemperatureActivity" />
+        <activity android:name=".ui.monitor.RespirationActivity" />
+        <activity android:name=".ui.monitor.StepsActivity" />
+        <activity android:name=".ui.monitor.CaloriesActivity" />
+
 
 
     </application>

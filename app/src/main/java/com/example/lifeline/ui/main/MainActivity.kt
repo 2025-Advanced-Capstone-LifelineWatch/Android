@@ -11,6 +11,9 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.health.connect.client.HealthConnectClient
 import androidx.health.connect.client.permission.HealthPermission
 import androidx.health.connect.client.PermissionController
+import androidx.health.connect.client.records.BloodPressureRecord
+import androidx.health.connect.client.records.HeartRateRecord
+import androidx.health.connect.client.records.StepsRecord
 import com.example.lifeline.R
 import com.example.lifeline.data.repository.HealthRepository
 import com.example.lifeline.ui.login.LoginActivity
@@ -25,11 +28,14 @@ class MainActivity : ComponentActivity() {
     private lateinit var healthConnectClient: HealthConnectClient
 
     private val PERMISSIONS = setOf(
-        HealthPermission.getReadPermission(androidx.health.connect.client.records.HeartRateRecord::class),
-        HealthPermission.getWritePermission(androidx.health.connect.client.records.HeartRateRecord::class),
-        HealthPermission.getReadPermission(androidx.health.connect.client.records.StepsRecord::class),
-        HealthPermission.getWritePermission(androidx.health.connect.client.records.StepsRecord::class),
+        HealthPermission.getReadPermission(HeartRateRecord::class),
+        HealthPermission.getWritePermission(HeartRateRecord::class),
+        HealthPermission.getReadPermission(StepsRecord::class),
+        HealthPermission.getWritePermission(StepsRecord::class),
+        HealthPermission.getReadPermission(BloodPressureRecord::class),
+        HealthPermission.getWritePermission(BloodPressureRecord::class)
     )
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
