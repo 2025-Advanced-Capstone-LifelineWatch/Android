@@ -20,25 +20,25 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import java.time.LocalDate
 import java.util.*
 
-class BloodPressureActivity : AppCompatActivity() {
+class TemperatureActivity : AppCompatActivity() {
 
     private lateinit var chart: LineChart
     private lateinit var btnDate: Button
     private lateinit var tvDate: TextView
     private lateinit var summaryContainer: LinearLayout
-    private lateinit var viewModel: BloodPressureViewModel
+    private lateinit var viewModel: TemperatureViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
-        setContentView(R.layout.activity_blood_pressure)
+        setContentView(R.layout.activity_temperature)
 
-        chart = findViewById(R.id.blood_pressure_chart)
+        chart = findViewById(R.id.temperature_chart)
         btnDate = findViewById(R.id.btn_select_date)
         tvDate = findViewById(R.id.tv_selected_date)
-        summaryContainer = findViewById(R.id.pressure_container)
+        summaryContainer = findViewById(R.id.temperature_container)
 
-        viewModel = ViewModelProvider(this, BloodPressureViewModelFactory(this))[BloodPressureViewModel::class.java]
+        viewModel = ViewModelProvider(this, TemperatureViewModelFactory(this))[TemperatureViewModel::class.java]
 
         setupChart()
 
@@ -48,21 +48,20 @@ class BloodPressureActivity : AppCompatActivity() {
 
         val today = LocalDate.now()
         tvDate.text = "${today.monthValue}.${today.dayOfMonth} (${getKoreanDayOfWeek(today)})"
-        viewModel.fetchAndAverageByDate(today)
+        viewModel.fetchTemperaturesByDate(today)
 
-
-        viewModel.hourlyAverages.observe(this) { list ->
+        viewModel.dailyTemperatures.observe(this) { list ->
             val entries = list.mapIndexed { i, it ->
-                Entry(i.toFloat(), it.avgSystolic.toFloat())
+                Entry(i.toFloat(), it.celsius.toFloat())
             }
 
-            val dataSet = LineDataSet(entries, "수축기(mmHg)").apply {
-                color = Color.parseColor("#EC407A")
+            val dataSet = LineDataSet(entries, "체온(°C)").apply {
+                color = Color.parseColor("#0080FF")
                 valueTextSize = 0f
                 lineWidth = 2f
                 setDrawCircles(false)
                 setDrawFilled(true)
-                fillColor = Color.parseColor("#F8BBD0")
+                fillColor = Color.parseColor("#D0E8FF")
                 mode = LineDataSet.Mode.CUBIC_BEZIER
             }
 
@@ -77,7 +76,7 @@ class BloodPressureActivity : AppCompatActivity() {
                 val hour = time.substring(0, 2)
                 val minute = time.substring(3, 5)
                 val row = TextView(this).apply {
-                    text = "${hour}시 ${minute}분 : ${it.avgDiastolic.toInt()} (이완) / ${it.avgSystolic.toInt()} (수축)"
+                    text = "${hour}시 ${minute}분 : ${String.format("%.1f", it.celsius)}°C"
                     textSize = 16f
                     setTextColor(Color.BLACK)
                     setPadding(0, 12, 0, 4)
@@ -103,18 +102,17 @@ class BloodPressureActivity : AppCompatActivity() {
             axisRight.isEnabled = false
 
             axisLeft.apply {
-                axisMinimum = 0f
-                axisMaximum = 200f
-                granularity = 20f
-                setLabelCount(11, true)
+                axisMinimum = 34f
+                axisMaximum = 42f
+                granularity = 1f
+                setLabelCount(9, true)
                 setDrawGridLines(true)
                 setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART)
-
             }
 
             xAxis.apply {
                 position = XAxis.XAxisPosition.BOTTOM
-                granularity = 20f
+                granularity = 1f
                 setDrawGridLines(false)
                 textColor = Color.DKGRAY
             }
@@ -132,7 +130,7 @@ class BloodPressureActivity : AppCompatActivity() {
             { _, selectedYear, selectedMonth, selectedDay ->
                 val date = LocalDate.of(selectedYear, selectedMonth + 1, selectedDay)
                 tvDate.text = "${selectedMonth + 1}.${selectedDay} (${getKoreanDayOfWeek(date)})"
-                viewModel.fetchAndAverageByDate(date)
+                viewModel.fetchTemperaturesByDate(date)
             },
             year, month, day
         )

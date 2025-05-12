@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="temperature_chart" type="id" />
+    <item name="temperature_container" type="id" />
+    <item name="temp_title" type="id" />
+    <item name="toolbar_temp_title" type="id" />
+</resources>

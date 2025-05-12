@@ -20,25 +20,25 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import java.time.LocalDate
 import java.util.*
 
-class BloodPressureActivity : AppCompatActivity() {
+class CaloriesActivity : AppCompatActivity() {
 
     private lateinit var chart: LineChart
     private lateinit var btnDate: Button
     private lateinit var tvDate: TextView
     private lateinit var summaryContainer: LinearLayout
-    private lateinit var viewModel: BloodPressureViewModel
+    private lateinit var viewModel: CaloriesViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
-        setContentView(R.layout.activity_blood_pressure)
+        setContentView(R.layout.activity_calories)
 
-        chart = findViewById(R.id.blood_pressure_chart)
+        chart = findViewById(R.id.calories_chart)
         btnDate = findViewById(R.id.btn_select_date)
         tvDate = findViewById(R.id.tv_selected_date)
-        summaryContainer = findViewById(R.id.pressure_container)
+        summaryContainer = findViewById(R.id.calories_container)
 
-        viewModel = ViewModelProvider(this, BloodPressureViewModelFactory(this))[BloodPressureViewModel::class.java]
+        viewModel = ViewModelProvider(this, CaloriesViewModelFactory(this))[CaloriesViewModel::class.java]
 
         setupChart()
 
@@ -48,21 +48,20 @@ class BloodPressureActivity : AppCompatActivity() {
 
         val today = LocalDate.now()
         tvDate.text = "${today.monthValue}.${today.dayOfMonth} (${getKoreanDayOfWeek(today)})"
-        viewModel.fetchAndAverageByDate(today)
+        viewModel.fetchCaloriesByDate(today)
 
-
-        viewModel.hourlyAverages.observe(this) { list ->
+        viewModel.caloriesRecords.observe(this) { list ->
             val entries = list.mapIndexed { i, it ->
-                Entry(i.toFloat(), it.avgSystolic.toFloat())
+                Entry(i.toFloat(), it.kcal.toFloat())
             }
 
-            val dataSet = LineDataSet(entries, "수축기(mmHg)").apply {
-                color = Color.parseColor("#EC407A")
+            val dataSet = LineDataSet(entries, "소모 칼로리 (kcal)").apply {
+                color = Color.parseColor("#7F3FBF")
                 valueTextSize = 0f
                 lineWidth = 2f
                 setDrawCircles(false)
                 setDrawFilled(true)
-                fillColor = Color.parseColor("#F8BBD0")
+                fillColor = Color.parseColor("#BE9EDE")
                 mode = LineDataSet.Mode.CUBIC_BEZIER
             }
 
@@ -77,7 +76,7 @@ class BloodPressureActivity : AppCompatActivity() {
                 val hour = time.substring(0, 2)
                 val minute = time.substring(3, 5)
                 val row = TextView(this).apply {
-                    text = "${hour}시 ${minute}분 : ${it.avgDiastolic.toInt()} (이완) / ${it.avgSystolic.toInt()} (수축)"
+                    text = "${hour}시 ${minute}분 : ${String.format("%.1f", it.kcal)} kcal"
                     textSize = 16f
                     setTextColor(Color.BLACK)
                     setPadding(0, 12, 0, 4)
@@ -104,17 +103,16 @@ class BloodPressureActivity : AppCompatActivity() {
 
             axisLeft.apply {
                 axisMinimum = 0f
-                axisMaximum = 200f
-                granularity = 20f
+                axisMaximum = 3000f
+                granularity = 300f
                 setLabelCount(11, true)
                 setDrawGridLines(true)
                 setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART)
-
             }
 
             xAxis.apply {
                 position = XAxis.XAxisPosition.BOTTOM
-                granularity = 20f
+                granularity = 1f
                 setDrawGridLines(false)
                 textColor = Color.DKGRAY
             }
@@ -132,7 +130,7 @@ class BloodPressureActivity : AppCompatActivity() {
             { _, selectedYear, selectedMonth, selectedDay ->
                 val date = LocalDate.of(selectedYear, selectedMonth + 1, selectedDay)
                 tvDate.text = "${selectedMonth + 1}.${selectedDay} (${getKoreanDayOfWeek(date)})"
-                viewModel.fetchAndAverageByDate(date)
+                viewModel.fetchCaloriesByDate(date)
             },
             year, month, day
         )

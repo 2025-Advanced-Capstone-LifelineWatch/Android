@@ -2,24 +2,26 @@ package com.example.lifeline.ui.monitor
 
 import android.content.Context
 import androidx.lifecycle.*
-import com.example.lifeline.data.BloodPressureData
+import com.example.lifeline.data.RespirationData
 import com.example.lifeline.util.HealthConnectManager
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.ZoneId
-import java.time.ZonedDateTime
 
-class BloodPressureViewModel(
+class RespirationViewModel(
     private val manager: HealthConnectManager
 ) : ViewModel() {
 
-    private val _hourlyAverages = MutableLiveData<List<BloodPressureData>>()
-    val hourlyAverages: LiveData<List<BloodPressureData>> get() = _hourlyAverages
+    private val _records = MutableLiveData<List<RespirationData>>()
+    val records: LiveData<List<RespirationData>> get() = _records
 
-    fun fetchAndAverageByDate(date: LocalDate) {
+    fun fetchByDate(date: LocalDate) {
         viewModelScope.launch {
             val zoneId = ZoneId.systemDefault()
-            val all = manager.readBloodPressure()
+            val startTime = date.atStartOfDay(zoneId).toInstant()
+            val endTime = date.plusDays(1).atStartOfDay(zoneId).toInstant()
+
+            val all = manager.readRespiratoryRate(startTime, endTime)
 
             val filtered = all.filter {
                 val localDate = it.time.atZone(zoneId).toLocalDate()
@@ -27,21 +29,20 @@ class BloodPressureViewModel(
             }
 
             val records = filtered.map { record ->
-                BloodPressureData(
+                RespirationData(
                     time = record.time.atZone(zoneId).toString(),
-                    avgSystolic = record.systolic.inMillimetersOfMercury,
-                    avgDiastolic = record.diastolic.inMillimetersOfMercury
+                    bpm = record.rate
                 )
             }.sortedBy { it.time }
 
-            _hourlyAverages.value = records
+            _records.value = records
         }
     }
 }
 
-class BloodPressureViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
+class RespirationViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         val manager = HealthConnectManager(context)
-        return BloodPressureViewModel(manager) as T
+        return RespirationViewModel(manager) as T
     }
 }

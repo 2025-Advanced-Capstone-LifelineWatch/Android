@@ -14,6 +14,7 @@ class MyPageActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportActionBar?.hide()
         setContentView(R.layout.activity_my_page)
 
         recyclerView = findViewById(R.id.recyclerView)

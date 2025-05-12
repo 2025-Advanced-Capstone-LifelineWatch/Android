@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#F8F9FA"
     android:padding="16dp">
 
-    <!-- 상단 툴바 -->
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -25,7 +22,6 @@
             android:textSize="30sp" />
     </com.google.android.material.appbar.MaterialToolbar>
 
-    <!-- 날짜 선택 버튼 -->
     <Button
         android:id="@+id/btn_select_date"
         android:layout_width="wrap_content"
@@ -36,7 +32,6 @@
         android:backgroundTint="@color/purple_200"
         android:textColor="@android:color/white" />
 
-    <!-- 선택된 날짜 표시 -->
     <TextView
         android:id="@+id/tv_selected_date"
         android:layout_width="wrap_content"
@@ -47,43 +42,38 @@
         android:textStyle="bold"
         android:textColor="@android:color/black" />
 
-    <!-- 혈압 그래프 -->
     <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/blood_pressure_chart"
+        android:id="@+id/respiration_chart"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:layout_marginTop="16dp" />
 
     <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar2"
-        android:layout_width="95dp"
+        android:id="@+id/toolbar_respiration_title"
+        android:layout_width="110dp"
         android:layout_height="40dp"
         android:layout_marginTop="10dp"
         android:gravity="center"
         android:background="@drawable/rounded_toolbar_background">
 
         <TextView
-            android:id="@+id/social_title"
+            android:id="@+id/temp_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="혈압 기록"
+            android:text="호흡수 기록"
             android:textSize="16sp"
-            android:textColor="@color/black"/>
-
+            android:textColor="@color/black" />
     </com.google.android.material.appbar.MaterialToolbar>
 
-    <!-- 혈압 요약 리스트 -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp">
+        android:layout_marginTop="4dp">
 
         <LinearLayout
-            android:id="@+id/pressure_container"
+            android:id="@+id/respiration_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="24dp" />
+            android:orientation="vertical" />
     </ScrollView>
-
 </LinearLayout>

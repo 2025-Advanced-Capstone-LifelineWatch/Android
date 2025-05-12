@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.activity.ComponentActivity
 import com.example.lifeline.R
+import com.example.lifeline.ui.healthmanage.HealthManageActivity
 import com.example.lifeline.ui.monitor.BloodPressureActivity
 import com.example.lifeline.ui.mypage.MyPageActivity
 
@@ -16,7 +17,7 @@ class HomeActivity: ComponentActivity() {
 
         val btnHealthCheck: Button = findViewById(R.id.health_check)
         btnHealthCheck.setOnClickListener {
-            val intent = Intent(this, BloodPressureActivity::class.java)
+            val intent = Intent(this, HealthManageActivity::class.java)
             startActivity(intent)
         }
 

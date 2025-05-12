@@ -2,24 +2,23 @@ package com.example.lifeline.ui.monitor
 
 import android.content.Context
 import androidx.lifecycle.*
-import com.example.lifeline.data.BloodPressureData
+import com.example.lifeline.data.TemperatureData
 import com.example.lifeline.util.HealthConnectManager
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.ZoneId
-import java.time.ZonedDateTime
 
-class BloodPressureViewModel(
+class TemperatureViewModel(
     private val manager: HealthConnectManager
 ) : ViewModel() {
 
-    private val _hourlyAverages = MutableLiveData<List<BloodPressureData>>()
-    val hourlyAverages: LiveData<List<BloodPressureData>> get() = _hourlyAverages
+    private val _dailyTemperatures = MutableLiveData<List<TemperatureData>>()
+    val dailyTemperatures: LiveData<List<TemperatureData>> get() = _dailyTemperatures
 
-    fun fetchAndAverageByDate(date: LocalDate) {
+    fun fetchTemperaturesByDate(date: LocalDate) {
         viewModelScope.launch {
             val zoneId = ZoneId.systemDefault()
-            val all = manager.readBloodPressure()
+            val all = manager.readTemperature()
 
             val filtered = all.filter {
                 val localDate = it.time.atZone(zoneId).toLocalDate()
@@ -27,21 +26,20 @@ class BloodPressureViewModel(
             }
 
             val records = filtered.map { record ->
-                BloodPressureData(
+                TemperatureData(
                     time = record.time.atZone(zoneId).toString(),
-                    avgSystolic = record.systolic.inMillimetersOfMercury,
-                    avgDiastolic = record.diastolic.inMillimetersOfMercury
+                    celsius = record.temperature.inCelsius
                 )
             }.sortedBy { it.time }
 
-            _hourlyAverages.value = records
+            _dailyTemperatures.value = records
         }
     }
 }
 
-class BloodPressureViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
+class TemperatureViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         val manager = HealthConnectManager(context)
-        return BloodPressureViewModel(manager) as T
+        return TemperatureViewModel(manager) as T
     }
 }

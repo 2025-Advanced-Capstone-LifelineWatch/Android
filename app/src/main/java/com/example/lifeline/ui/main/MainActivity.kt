@@ -11,6 +11,13 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.health.connect.client.HealthConnectClient
 import androidx.health.connect.client.permission.HealthPermission
 import androidx.health.connect.client.PermissionController
+import androidx.health.connect.client.records.BloodPressureRecord
+import androidx.health.connect.client.records.BodyTemperatureRecord
+import androidx.health.connect.client.records.HeartRateRecord
+import androidx.health.connect.client.records.OxygenSaturationRecord
+import androidx.health.connect.client.records.RespiratoryRateRecord
+import androidx.health.connect.client.records.StepsRecord
+import com.example.lifeline.service.HealthDataService
 import com.example.lifeline.R
 import com.example.lifeline.data.repository.HealthRepository
 import com.example.lifeline.ui.login.LoginActivity
@@ -18,6 +25,7 @@ import com.example.lifeline.ui.signup.SignupActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.concurrent.TimeUnit
 
 class MainActivity : ComponentActivity() {
 
@@ -25,11 +33,21 @@ class MainActivity : ComponentActivity() {
     private lateinit var healthConnectClient: HealthConnectClient
 
     private val PERMISSIONS = setOf(
-        HealthPermission.getReadPermission(androidx.health.connect.client.records.HeartRateRecord::class),
-        HealthPermission.getWritePermission(androidx.health.connect.client.records.HeartRateRecord::class),
-        HealthPermission.getReadPermission(androidx.health.connect.client.records.StepsRecord::class),
-        HealthPermission.getWritePermission(androidx.health.connect.client.records.StepsRecord::class),
+        HealthPermission.getReadPermission(HeartRateRecord::class),
+        HealthPermission.getWritePermission(HeartRateRecord::class),
+        HealthPermission.getReadPermission(StepsRecord::class),
+        HealthPermission.getWritePermission(StepsRecord::class),
+        HealthPermission.getReadPermission(BloodPressureRecord::class),
+        HealthPermission.getWritePermission(BloodPressureRecord::class),
+        HealthPermission.getReadPermission(BodyTemperatureRecord::class),
+        HealthPermission.getWritePermission(BodyTemperatureRecord::class),
+        HealthPermission.getReadPermission(RespiratoryRateRecord::class),
+        HealthPermission.getWritePermission(RespiratoryRateRecord::class),
+        HealthPermission.getReadPermission(OxygenSaturationRecord::class),
+        HealthPermission.getWritePermission(OxygenSaturationRecord::class)
+
     )
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,6 +105,8 @@ class MainActivity : ComponentActivity() {
         findViewById<Button>(R.id.btn_signup).setOnClickListener {
             startActivity(Intent(this, SignupActivity::class.java))
         }
+
+        startHealthDataService()
     }
 
     private fun showInstalledPopup() {
@@ -110,4 +130,10 @@ class MainActivity : ComponentActivity() {
             .setNegativeButton("취소", null)
             .show()
     }
+
+    private fun startHealthDataService() {
+        val serviceIntent = Intent(this, HealthDataService::class.java)
+        startForegroundService(serviceIntent)
+    }
+
 }

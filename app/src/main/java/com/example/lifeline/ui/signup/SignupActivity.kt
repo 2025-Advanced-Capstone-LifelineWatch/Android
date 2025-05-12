@@ -11,6 +11,7 @@ import com.example.lifeline.ui.signup.fragments.SignupStep3Fragment
 class SignupActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportActionBar?.hide()
         setContentView(R.layout.activity_signup)
 
         if (savedInstanceState == null) {
@@ -26,9 +27,15 @@ class SignupActivity : AppCompatActivity() {
             else -> return
         }
 
-        supportFragmentManager.beginTransaction()
+        val transaction = supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, fragment)
-            .addToBackStack(null)
-            .commit()
+
+        // step 1은 백스택에 쌓지 않음
+        if (step != 1) {
+            transaction.addToBackStack(null)
+        }
+
+        transaction.commit()
     }
+
 }
