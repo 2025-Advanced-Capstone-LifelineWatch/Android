@@ -46,18 +46,23 @@ class BloodPressureActivity : AppCompatActivity() {
             showDatePicker()
         }
 
+        val today = LocalDate.now()
+        tvDate.text = "${today.monthValue}.${today.dayOfMonth} (${getKoreanDayOfWeek(today)})"
+        viewModel.fetchAndAverageByDate(today)
+
+
         viewModel.hourlyAverages.observe(this) { list ->
             val entries = list.mapIndexed { i, it ->
                 Entry(i.toFloat(), it.avgSystolic.toFloat())
             }
 
             val dataSet = LineDataSet(entries, "수축기(mmHg)").apply {
-                color = Color.parseColor("#FF6A00")
+                color = Color.parseColor("#EC407A")
                 valueTextSize = 0f
                 lineWidth = 2f
                 setDrawCircles(false)
                 setDrawFilled(true)
-                fillColor = Color.parseColor("#FFFFE0")
+                fillColor = Color.parseColor("#F8BBD0")
                 mode = LineDataSet.Mode.CUBIC_BEZIER
             }
 

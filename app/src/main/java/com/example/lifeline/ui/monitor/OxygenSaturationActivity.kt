@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.lifeline.R
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
@@ -19,25 +20,25 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import java.time.LocalDate
 import java.util.*
 
-class StepsActivity : AppCompatActivity() {
+class OxygenSaturationActivity : AppCompatActivity() {
 
     private lateinit var chart: LineChart
     private lateinit var btnDate: Button
     private lateinit var tvDate: TextView
     private lateinit var summaryContainer: LinearLayout
-    private lateinit var viewModel: StepsViewModel
+    private lateinit var viewModel: OxygenSaturationViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
-        setContentView(R.layout.activity_steps)
+        setContentView(R.layout.activity_oxygen_saturation)
 
-        chart = findViewById(R.id.steps_chart)
+        chart = findViewById(R.id.oxygen_chart)
         btnDate = findViewById(R.id.btn_select_date)
         tvDate = findViewById(R.id.tv_selected_date)
-        summaryContainer = findViewById(R.id.steps_container)
+        summaryContainer = findViewById(R.id.oxygen_container)
 
-        viewModel = ViewModelProvider(this, StepsViewModelFactory(this))[StepsViewModel::class.java]
+        viewModel = ViewModelProvider(this, OxygenSaturationViewModelFactory(this))[OxygenSaturationViewModel::class.java]
 
         setupChart()
 
@@ -49,18 +50,19 @@ class StepsActivity : AppCompatActivity() {
         tvDate.text = "${today.monthValue}.${today.dayOfMonth} (${getKoreanDayOfWeek(today)})"
         viewModel.fetchByDate(today)
 
-        viewModel.stepsRecords.observe(this) { list ->
+
+        viewModel.records.observe(this) { list ->
             val entries = list.mapIndexed { i, it ->
-                Entry(i.toFloat(), it.count.toFloat())
+                Entry(i.toFloat(), it.saturation.toFloat())
             }
 
-            val dataSet = LineDataSet(entries, "걸음 수").apply {
-                color = Color.parseColor("#FF6A00")
+            val dataSet = LineDataSet(entries, "산소포화도 (%)").apply {
+                color = Color.parseColor("#26C6DA")
                 valueTextSize = 0f
                 lineWidth = 2f
                 setDrawCircles(false)
                 setDrawFilled(true)
-                fillColor = Color.parseColor("#FFFFE0")
+                fillColor = Color.parseColor("#B2EBF2")
                 mode = LineDataSet.Mode.CUBIC_BEZIER
             }
 
@@ -74,7 +76,7 @@ class StepsActivity : AppCompatActivity() {
                 val time = it.time.substring(11, 16)
                 val (h, m) = time.split(":")
                 val row = TextView(this).apply {
-                    text = "${h}시 ${m}분 : ${it.count} 걸음"
+                    text = "${h}시 ${m}분 : ${it.saturation}%"
                     textSize = 16f
                     setTextColor(Color.BLACK)
                     setPadding(0, 12, 0, 4)
@@ -100,9 +102,12 @@ class StepsActivity : AppCompatActivity() {
             axisRight.isEnabled = false
 
             axisLeft.apply {
-                axisMinimum = 0f
-                granularity = 500f
+                axisMinimum = 60f
+                axisMaximum = 100f
+                granularity = 5f
+                setLabelCount(9, true)
                 setDrawGridLines(true)
+                setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART)
             }
 
             xAxis.apply {
@@ -116,10 +121,6 @@ class StepsActivity : AppCompatActivity() {
 
     private fun showDatePicker() {
         val calendar = Calendar.getInstance()
-        val date = LocalDate.now()
-        tvDate.text = "${date.monthValue}.${date.dayOfMonth} (${getKoreanDayOfWeek(date)})"
-        viewModel.fetchByDate(date)
-
         val year = calendar.get(Calendar.YEAR)
         val month = calendar.get(Calendar.MONTH)
         val day = calendar.get(Calendar.DAY_OF_MONTH)
@@ -127,9 +128,9 @@ class StepsActivity : AppCompatActivity() {
         val datePickerDialog = DatePickerDialog(
             this,
             { _, selectedYear, selectedMonth, selectedDay ->
-                val selectedDate = LocalDate.of(selectedYear, selectedMonth + 1, selectedDay)
-                tvDate.text = "${selectedMonth + 1}.${selectedDay} (${getKoreanDayOfWeek(selectedDate)})"
-                viewModel.fetchByDate(selectedDate)
+                val date = LocalDate.of(selectedYear, selectedMonth + 1, selectedDay)
+                tvDate.text = "${selectedMonth + 1}.${selectedDay} (${getKoreanDayOfWeek(date)})"
+                viewModel.fetchByDate(date)
             },
             year, month, day
         )

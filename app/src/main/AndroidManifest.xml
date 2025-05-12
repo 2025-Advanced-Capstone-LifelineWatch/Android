@@ -16,18 +16,30 @@
     <uses-permission android:name="android.permission.health.WRITE_STEPS"/>
 
     <uses-permission android:name="android.permission.health.READ_ACTIVE_CALORIES_BURNED"/> <!-- 활성 칼로리 -->
+    <uses-permission android:name="android.permission.health.WRITE_ACTIVE_CALORIES_BURNED"/> <!-- 활성 칼로리 -->
+
     <uses-permission android:name="android.permission.health.READ_TOTAL_CALORIES_BURNED"/> <!-- 총 칼로리 -->
+    <uses-permission android:name="android.permission.health.WRITE_TOTAL_CALORIES_BURNED"/> <!-- 총 칼로리 -->
+
 
     <uses-permission android:name="android.permission.health.READ_ACTIVITY_INTENSITY"/> <!-- 활동 강도 -->
-    <uses-permission android:name="android.permission.READ_RESPIRATORY_RATE"/>     <!-- 호흡수 -->
-    <uses-permission android:name="android.permission.health.READ_BASAL_BODY_TEMPERATURE" /> <!--체온 -->
 
+    <uses-permission android:name="android.permission.health.READ_RESPIRATORY_RATE"/>     <!-- 호흡수 -->
+    <uses-permission android:name="android.permission.health.WRITE_RESPIRATORY_RATE"/>     <!-- 호흡수 -->
+
+    <uses-permission android:name="android.permission.health.READ_BODY_TEMPERATURE" /> <!--체온 -->
+    <uses-permission android:name="android.permission.health.WRITE_BODY_TEMPERATURE"/>
+
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <queries>
         <package android:name="com.google.android.apps.healthdata" />
     </queries>
 
     <application
+
+        android:networkSecurityConfig="@xml/network_security_config"
         android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -35,6 +47,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         tools:targetApi="31" >
+        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
 
         <activity
             android:name=".util.PermissionsRationaleActivity"
@@ -74,8 +87,13 @@
         <activity android:name=".ui.monitor.RespirationActivity" />
         <activity android:name=".ui.monitor.StepsActivity" />
         <activity android:name=".ui.monitor.CaloriesActivity" />
+        <activity android:name=".ui.monitor.OxygenSaturationActivity"/>
 
-
+        <service
+            android:name=".service.HealthDataService"
+            android:foregroundServiceType="dataSync"
+            android:exported="false"/>
 
     </application>
+
 </manifest>

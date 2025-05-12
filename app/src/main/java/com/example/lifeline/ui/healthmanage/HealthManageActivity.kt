@@ -7,6 +7,7 @@ import androidx.cardview.widget.CardView
 import com.example.lifeline.R
 import com.example.lifeline.ui.monitor.BloodPressureActivity
 import com.example.lifeline.ui.monitor.CaloriesActivity
+import com.example.lifeline.ui.monitor.OxygenSaturationActivity
 import com.example.lifeline.ui.monitor.RespirationActivity
 import com.example.lifeline.ui.monitor.StepsActivity
 import com.example.lifeline.ui.monitor.TemperatureActivity
@@ -24,6 +25,7 @@ class HealthManageActivity : AppCompatActivity() {
         val cardBreath = findViewById<CardView>(R.id.card_respiration)
         val cardSteps = findViewById<CardView>(R.id.card_steps)
         val cardCalories = findViewById<CardView>(R.id.card_calories)
+        val cardOxygen = findViewById<CardView>(R.id.card_oxy)
 
         cardBlood.setOnClickListener {
             startActivity(Intent(this, BloodPressureActivity::class.java))
@@ -35,6 +37,10 @@ class HealthManageActivity : AppCompatActivity() {
 
         cardBreath.setOnClickListener {
             startActivity(Intent(this, RespirationActivity::class.java))
+        }
+
+        cardOxygen.setOnClickListener {
+            startActivity(Intent(this, OxygenSaturationActivity::class.java))
         }
 
         cardSteps.setOnClickListener {
