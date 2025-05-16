@@ -48,6 +48,7 @@
             android:textSize="14sp" />
 
         <EditText
+            android:id="@+id/input_address"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_marginTop="4dp"
@@ -65,6 +66,7 @@
             android:textSize="14sp" />
 
         <EditText
+            android:id="@+id/input_social"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_marginTop="4dp"
@@ -74,6 +76,41 @@
             android:padding="12dp"
             android:textSize="14sp" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="장애인 등록 번호"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/input_dpn"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="16dp"
+            android:hint="장애인 등록 번호를 입력해주세요."
+            android:background="@drawable/button_white_rounded"
+            android:padding="12dp"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="보호자 이름"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/input_protect_name"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="24dp"
+            android:hint="보호자 이름을 입력해주세요."
+            android:background="@drawable/button_white_rounded"
+            android:padding="12dp"
+            android:textSize="14sp"
+            android:inputType="text" />
+
         <!-- 보호자 휴대전화 번호 -->
         <TextView
             android:layout_width="wrap_content"
@@ -82,6 +119,7 @@
             android:textSize="14sp" />
 
         <EditText
+            android:id="@+id/input_protect_PH"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_marginTop="4dp"
@@ -100,6 +138,6 @@
             android:text="가입하기"
             android:textColor="@color/black"
             android:textSize="16sp"
-            android:backgroundTint="@color/gray" />
+            android:background="@drawable/btn_next_selector" />
     </LinearLayout>
 </ScrollView>

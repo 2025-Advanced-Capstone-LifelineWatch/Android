@@ -122,7 +122,6 @@ class HealthDataService : Service() {
     private lateinit var manager: HealthConnectManager
     private val client = OkHttpClient()
 
-    // 데이터 전송 간격 (30초 = 30 * 1000 밀리초)
     private val SEND_INTERVAL = 30 * 1000L
 
     override fun onCreate() {
@@ -215,7 +214,6 @@ class HealthDataService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        // 서비스가 종료되면 재시작
         return START_STICKY
     }
 

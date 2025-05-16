@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.result.ActivityResultLauncher
 import androidx.health.connect.client.HealthConnectClient
@@ -22,6 +23,7 @@ import com.example.lifeline.R
 import com.example.lifeline.data.repository.HealthRepository
 import com.example.lifeline.ui.login.LoginActivity
 import com.example.lifeline.ui.signup.SignupActivity
+import com.example.lifeline.util.MyFcmToken
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -103,6 +105,12 @@ class MainActivity : ComponentActivity() {
         }
 
         findViewById<Button>(R.id.btn_signup).setOnClickListener {
+            val token = MyFcmToken.fcmToken
+            if (token.isNullOrEmpty()) {
+                Toast.makeText(this, "FCM 토큰이 아직 준비되지 않았습니다. 잠시 후 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            Toast.makeText(this, token, Toast.LENGTH_SHORT).show()
             startActivity(Intent(this, SignupActivity::class.java))
         }
 

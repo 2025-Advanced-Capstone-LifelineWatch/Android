@@ -8,6 +8,25 @@ import com.example.lifeline.ui.signup.fragments.SignupStep1Fragment
 import com.example.lifeline.ui.signup.fragments.SignupStep2Fragment
 import com.example.lifeline.ui.signup.fragments.SignupStep3Fragment
 
+val userSignupData = SignupData()
+
+data class SignupData(
+    var name: String = "",
+    var loginId: String = "",
+    var email: String = "",
+    var password: String = "",
+    var phoneNumber: String = "",
+    var address: String = "",
+    var rrn: String = "",
+    var drn: String = "",
+    var socialWorkerId: Long = 0,
+    var birthDate: String = "",
+    var gender: String = "",
+    var protectorContact: String = "",
+    var protectorName: String = "",
+    var verificationCode: String = ""
+)
+
 class SignupActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +49,6 @@ class SignupActivity : AppCompatActivity() {
         val transaction = supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, fragment)
 
-        // step 1은 백스택에 쌓지 않음
         if (step != 1) {
             transaction.addToBackStack(null)
         }
