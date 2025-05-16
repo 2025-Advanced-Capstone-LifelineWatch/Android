@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -100,6 +101,7 @@ class SignupStep1Fragment : Fragment() {
                         }
                     } catch (e: Exception) {
                         Toast.makeText(requireContext(), "네트워크 오류: ${e.localizedMessage}", Toast.LENGTH_SHORT).show()
+                        Log.d("SignupDebug", "네트워크 오류: ${e.localizedMessage}")
                     }
                 }
             }

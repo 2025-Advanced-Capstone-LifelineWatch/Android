@@ -13,14 +13,13 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import com.example.lifeline.LifelineApp
 import com.example.lifeline.R
 import com.example.lifeline.network.RetrofitClient
 import com.example.lifeline.network.dto.SignupRequest
 import com.example.lifeline.ui.signup.userSignupData
 import com.google.gson.Gson
 import kotlinx.coroutines.launch
-import com.example.lifeline.util.MyFcmToken
-
 
 
 class SignupStep3Fragment : Fragment() {
@@ -78,7 +77,7 @@ class SignupStep3Fragment : Fragment() {
             val birthDate = extractBirthDateFromRRN(userSignupData.rrn)
             userSignupData.birthDate = birthDate
 
-            val fcmToken = MyFcmToken.fcmToken ?: ""
+            val fcmToken = LifelineApp.fcmToken ?: ""
             val request = SignupRequest(
                 name = userSignupData.name,
                 loginId = userSignupData.loginId,
