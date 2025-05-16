@@ -48,6 +48,7 @@
             android:layout_marginBottom="4dp" />
 
         <EditText
+            android:id="@+id/input_id"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="@drawable/button_white_rounded"
@@ -65,6 +66,7 @@
             android:layout_marginBottom="4dp" />
 
         <EditText
+            android:id="@+id/input_pw"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="@drawable/button_white_rounded"
@@ -83,6 +85,7 @@
             android:layout_marginBottom="4dp" />
 
         <EditText
+            android:id="@+id/input_pw_re"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="@drawable/button_white_rounded"
@@ -101,6 +104,7 @@
             android:layout_marginBottom="4dp" />
 
         <EditText
+            android:id="@+id/input_rrn"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="@drawable/button_white_rounded"
@@ -130,9 +134,9 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="48dp"
-                android:backgroundTint="@color/gray"
                 android:text="남성"
-                android:textColor="@android:color/black" />
+                android:background="@drawable/btn_gender_unselected"
+                android:textColor="@android:color/white" />
 
             <Button
                 android:id="@+id/btn_female"
@@ -140,9 +144,9 @@
                 android:layout_weight="1"
                 android:layout_height="48dp"
                 android:layout_marginStart="8dp"
-                android:backgroundTint="@color/gray"
+                android:background="@drawable/btn_gender_unselected"
                 android:text="여성"
-                android:textColor="@color/black" />
+                android:textColor="@color/white" />
         </LinearLayout>
 
         <Button
@@ -150,7 +154,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:text="다음"
-            android:backgroundTint="@color/gray"
+            android:background="@drawable/btn_next_selector"
             android:textColor="@color/black"
             android:textSize="16sp" />
 

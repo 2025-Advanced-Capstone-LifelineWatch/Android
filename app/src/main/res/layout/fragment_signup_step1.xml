@@ -48,6 +48,7 @@
             android:layout_marginBottom="4dp" />
 
         <EditText
+            android:id="@+id/input_name"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="@drawable/button_white_rounded"
@@ -64,10 +65,11 @@
             android:layout_marginBottom="4dp" />
 
         <EditText
+            android:id="@+id/input_PH"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="@drawable/button_white_rounded"
-            android:hint="010-0000-0000 형식으로 입력해주세요"
+            android:hint=" - 없이 01012345678 형식으로 입력해주세요"
             android:padding="12dp"
             android:textSize="14sp"
             android:inputType="phone"
@@ -95,6 +97,7 @@
                 android:orientation="vertical">
 
                 <EditText
+                    android:id="@+id/auth_code"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="휴대폰 번호로 전송된 숫자 6자리를 입력해주세요"
@@ -103,6 +106,7 @@
             </LinearLayout>
 
             <Button
+                android:id="@+id/auth_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="인증번호 받기"
@@ -111,12 +115,14 @@
                 android:layout_marginStart="8dp" />
         </LinearLayout>
 
+
+
         <Button
             android:id="@+id/btn_register_1"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:text="다음"
-            android:backgroundTint="@color/gray"
+            android:background="@drawable/btn_next_selector"
             android:textColor="@color/black"
             android:textSize="16sp" />
     </LinearLayout>
