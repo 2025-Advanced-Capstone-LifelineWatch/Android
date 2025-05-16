@@ -48,6 +48,7 @@
             android:layout_marginBottom="4dp" />
 
         <EditText
+            android:id="@+id/input_id"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="@drawable/button_white_rounded"
@@ -65,6 +66,7 @@
             android:layout_marginBottom="4dp" />
 
         <EditText
+            android:id="@+id/input_pw"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="@drawable/button_white_rounded"
@@ -80,7 +82,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:text="로그인"
-            android:backgroundTint="@color/gray"
+            android:background="@drawable/btn_next_selector"
             android:textColor="@color/black"
             android:textSize="16sp" />
     </LinearLayout>

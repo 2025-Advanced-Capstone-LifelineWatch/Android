@@ -142,12 +142,14 @@
             android:layout_marginStart="12dp">
 
             <TextView
+                android:id="@+id/social_worker_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="김철수"
                 android:textSize="12sp"/>
 
             <TextView
+                android:id="@+id/social_worker_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="010-1234-5678"
@@ -261,16 +263,12 @@
                 android:textSize="14sp" />
 
             <TextView
+                android:id="@+id/my_birth"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1930.05.25"
                 android:textSize="12sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="고혈압환자"
-                android:textSize="12sp" />
         </LinearLayout>
     </LinearLayout>
 
@@ -300,12 +298,14 @@
                 android:textSize="14sp"/>
 
             <TextView
+                android:id="@+id/protector_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="김철수"
                 android:textSize="12sp"/>
 
             <TextView
+                android:id="@+id/protector_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="010-1234-5678"

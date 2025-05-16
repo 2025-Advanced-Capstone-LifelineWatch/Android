@@ -1,16 +1,22 @@
-package com.example.lifeline.util
+package com.example.lifeline
 
 import android.app.Application
 import android.util.Log
+import com.example.lifeline.network.RetrofitClient
 import com.google.firebase.messaging.FirebaseMessaging
 
-class MyFcmToken : Application() {
+class LifelineApp : Application() {
     companion object {
-        var fcmToken: String? =null
+        var fcmToken: String? = null
     }
+
     override fun onCreate() {
         super.onCreate()
 
+        // Retrofit 초기화
+        RetrofitClient.init(this)
+
+        // FCM 토큰 가져오기
         FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 fcmToken = task.result
