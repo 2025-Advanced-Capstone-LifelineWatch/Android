@@ -88,6 +88,10 @@
         <activity android:name=".ui.monitor.StepsActivity" />
         <activity android:name=".ui.monitor.CaloriesActivity" />
         <activity android:name=".ui.monitor.OxygenSaturationActivity"/>
+        <activity android:name=".ui.mypage.detailed.notice.NoticeActivity" />
+        <activity android:name=".ui.mypage.detailed.PrivacyPolicyActivity" />
+        <activity android:name=".ui.mypage.detailed.TermsActivity" />
+        <activity android:name=".ui.mypage.detailed.notice.NoticeDetailActivity" />
 
         <service
             android:name=".service.HealthDataService"
