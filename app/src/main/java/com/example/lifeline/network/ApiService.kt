@@ -1,5 +1,6 @@
 package com.example.lifeline.network
 
+import com.example.lifeline.network.dto.ChatRoomListResponse
 import com.example.lifeline.network.dto.FcmTokenUpdate
 import com.example.lifeline.network.dto.LoginRequest
 import com.example.lifeline.network.dto.LoginResponse
@@ -9,7 +10,6 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 import com.example.lifeline.network.dto.VerifyCodeRequest
 import retrofit2.http.GET
-import retrofit2.http.Header
 import retrofit2.http.PATCH
 import retrofit2.http.Query
 
@@ -28,7 +28,6 @@ interface AuthApiService {
     @POST("api/auth/signup")
     suspend fun signup(
         @Body request: SignupRequest,
-        @Header("fcm_token") fcmToken: String
     ): Response<Unit>
 
     @POST("api/auth/login")
@@ -40,4 +39,7 @@ interface AuthApiService {
     suspend fun updateFcmToken(
         @Body request: FcmTokenUpdate
     ): Response<Unit>
+
+    @GET("/api/chat-room/list")
+    suspend fun getChatRooms(): Response<ChatRoomListResponse>
 }
