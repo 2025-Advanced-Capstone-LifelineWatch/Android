@@ -10,6 +10,7 @@ import androidx.activity.ComponentActivity
 import com.example.lifeline.R
 import com.example.lifeline.ui.healthmanage.HealthManageActivity
 import com.example.lifeline.ui.mypage.MyPageActivity
+import com.example.lifeline.ui.chat.ChatListActivity
 
 class HomeActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,6 +52,10 @@ class HomeActivity : ComponentActivity() {
 
         findViewById<Button>(R.id.my_page).setOnClickListener {
             startActivity(Intent(this, MyPageActivity::class.java))
+        }
+
+        findViewById<Button>(R.id.btn_chat).setOnClickListener {
+            startActivity(Intent(this, ChatListActivity::class.java))
         }
     }
 }

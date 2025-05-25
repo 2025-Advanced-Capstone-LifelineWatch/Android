@@ -5,33 +5,34 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+// RetrofitClient.kt
 object RetrofitClient {
     private const val BASE_URL = "https://server.lifewatch.store/"
     private lateinit var context: Context
 
-    // Application 클래스에서 context 초기화
     fun init(appContext: Context) {
         context = appContext.applicationContext
     }
 
-    // OkHttpClient에 인터셉터 추가
     private val client: OkHttpClient by lazy {
         OkHttpClient.Builder()
             .addInterceptor(AuthInterceptor(context))
             .build()
     }
 
-    // Retrofit 객체 생성
     private val retrofit: Retrofit by lazy {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
-            .client(client) // 👈 인터셉터 포함된 클라이언트 적용
+            .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
 
-    // Auth API 서비스 인스턴스
-    val authService: AuthApiService by lazy {
-        retrofit.create(AuthApiService::class.java)
+    val apiService: ApiService by lazy {
+        retrofit.create(ApiService::class.java)
     }
+
+    // 필요 시 Auth 전용 인터페이스 따로 두는 것도 가능
+    val authService: ApiService get() = apiService
 }
+

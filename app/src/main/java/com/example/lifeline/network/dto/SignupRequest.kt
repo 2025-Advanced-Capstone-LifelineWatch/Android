@@ -14,5 +14,6 @@ data class SignupRequest(
     val gender: String,
     val protectorContact: String,
     val protectorName: String,
-    val verificationCode: String
+    val verificationCode: String,
+    val fcmToken: String
 )

@@ -1,5 +1,7 @@
 package com.example.lifeline.network
 
+import com.example.lifeline.network.dto.ApiResponse
+import com.example.lifeline.network.dto.ChatMessageResponse
 import com.example.lifeline.network.dto.ChatRoomListResponse
 import com.example.lifeline.network.dto.FcmTokenUpdate
 import com.example.lifeline.network.dto.LoginRequest
@@ -10,11 +12,13 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 import com.example.lifeline.network.dto.VerifyCodeRequest
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.PATCH
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 
-interface AuthApiService {
+interface ApiService {
     @GET("api/auth/sms")
     suspend fun requestSmsCode(
         @Query("phone") phoneNumber: String
@@ -42,4 +46,10 @@ interface AuthApiService {
 
     @GET("/api/chat-room/list")
     suspend fun getChatRooms(): Response<ChatRoomListResponse>
+
+    @GET("/api/chat-room/messages/{roomId}")
+    suspend fun getChatMessages(
+        @Path("roomId") roomId: Long,
+        @Header("Authorization") authHeader: String
+    ): Response<ApiResponse<List<ChatMessageResponse>>>
 }
