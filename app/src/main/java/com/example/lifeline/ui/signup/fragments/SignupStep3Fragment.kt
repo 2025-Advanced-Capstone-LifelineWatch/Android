@@ -77,7 +77,6 @@ class SignupStep3Fragment : Fragment() {
             val birthDate = extractBirthDateFromRRN(userSignupData.rrn)
             userSignupData.birthDate = birthDate
 
-            val fcmToken = LifelineApp.fcmToken ?: ""
             val request = SignupRequest(
                 name = userSignupData.name,
                 loginId = userSignupData.loginId,
@@ -92,7 +91,8 @@ class SignupStep3Fragment : Fragment() {
                 gender = userSignupData.gender,
                 protectorContact = protectorContact,
                 protectorName = protectorName,
-                verificationCode = userSignupData.verificationCode
+                verificationCode = userSignupData.verificationCode,
+                fcmToken = LifelineApp.fcmToken ?: ""
             )
 
             val json = Gson().toJson(request)
@@ -100,7 +100,7 @@ class SignupStep3Fragment : Fragment() {
 
             lifecycleScope.launch {
                 try {
-                    val response = RetrofitClient.authService.signup(request, fcmToken)
+                    val response = RetrofitClient.authService.signup(request)
                     if (response.isSuccessful) {
                         Toast.makeText(requireContext(), "회원가입 완료", Toast.LENGTH_SHORT).show()
                         activity?.finish()

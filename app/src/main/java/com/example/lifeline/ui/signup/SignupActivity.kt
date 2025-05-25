@@ -24,7 +24,8 @@ data class SignupData(
     var gender: String = "",
     var protectorContact: String = "",
     var protectorName: String = "",
-    var verificationCode: String = ""
+    var verificationCode: String = "",
+    val fcmToken: String = ""
 )
 
 class SignupActivity : AppCompatActivity() {

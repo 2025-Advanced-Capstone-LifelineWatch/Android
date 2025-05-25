@@ -16,6 +16,7 @@ workRuntimeKtx = "2.10.1"
 firebaseMessagingKtx = "24.1.1"
 recyclerview = "1.4.0"
 
+
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
