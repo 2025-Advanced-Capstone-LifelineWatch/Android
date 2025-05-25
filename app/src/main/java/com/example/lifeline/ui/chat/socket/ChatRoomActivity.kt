@@ -54,8 +54,11 @@ class ChatRoomActivity : AppCompatActivity() {
         etMessage = findViewById(R.id.et_message)
         btnSend = findViewById(R.id.btn_send)
 
-        socketManager = ChatSocketManager(adapter, roomId, userId)
+        socketManager = ChatSocketManager(adapter, roomId, userId) {
+            recyclerView.scrollToPosition(adapter.itemCount - 1)
+        }
         socketManager.connect(getToken())
+
 
         loadPreviousMessages()
 
@@ -94,16 +97,14 @@ class ChatRoomActivity : AppCompatActivity() {
                 val response = apiService.getChatMessages(roomId, "Bearer $token")
                 if (response.isSuccessful) {
                     val messages = response.body()?.results ?: emptyList()
-                    messages.forEach {
-                        adapter.addMessage(
-                            ChatMessage(
-                                message = it.message,
-                                isMe = it.senderId == userId,
-                                senderName = it.senderName,
-                                createdAt = it.createdAt
-                            )
+                    adapter.setMessages(messages.map {
+                        ChatMessage(
+                            message = it.message,
+                            isMe = it.senderId == userId,
+                            senderName = it.senderName,
+                            createdAt = it.createdAt,
                         )
-                    }
+                    })
                     recyclerView.scrollToPosition(adapter.itemCount - 1)
                 } else {
                     Log.e("ChatRoom", "❌ 메시지 불러오기 실패 - ${response.code()}")

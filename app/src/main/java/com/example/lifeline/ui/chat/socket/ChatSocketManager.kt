@@ -11,11 +11,14 @@ import ua.naiksoftware.stomp.Stomp
 import ua.naiksoftware.stomp.StompClient
 import ua.naiksoftware.stomp.dto.LifecycleEvent
 import ua.naiksoftware.stomp.dto.StompHeader
+import java.time.OffsetDateTime
+import java.time.format.DateTimeFormatter
 
 class ChatSocketManager(
     private val adapter: ChatMessageAdapter,
     private val roomId: Long,
-    private val currentUserId: Long
+    private val currentUserId: Long,
+    private val onMessageReceived: () -> Unit // ✅ 자동 스크롤용 콜백
 ) {
     private lateinit var stompClient: StompClient
 
@@ -37,16 +40,12 @@ class ChatSocketManager(
                 when (event.type) {
                     LifecycleEvent.Type.OPENED -> {
                         Log.d(TAG, "✅ WebSocket 연결됨 (OPENED)")
-
-                        // STOMP CONNECTED 직후를 위한 안전한 지연
                         Handler(Looper.getMainLooper()).postDelayed({
                             if (stompClient.isConnected) {
                                 Log.d(TAG, "📡 STOMP 연결 완료 → 구독 시작")
                                 subscribeToRoom()
-                            } else {
-                                Log.w(TAG, "❌ stompClient.isConnected == false (구독 생략)")
                             }
-                        }, 300) // 300~500ms 지연 (서버와 환경에 따라 조절 가능)
+                        }, 300)
                     }
 
                     LifecycleEvent.Type.CLOSED -> {
@@ -84,6 +83,7 @@ class ChatSocketManager(
                         profileImageUrl = data.optString("profileImageUrl", null)
                     )
                     adapter.addMessage(message)
+                    onMessageReceived() // ✅ 수신 후 자동 스크롤
                 } catch (e: Exception) {
                     Log.e(TAG, "📦 JSON 파싱 실패", e)
                 }
@@ -97,11 +97,13 @@ class ChatSocketManager(
             Log.w(TAG, "⚠️ 메시지 전송 시도했지만 연결되지 않음")
             return
         }
+        val now = OffsetDateTime.now().format(DateTimeFormatter.ISO_OFFSET_DATE_TIME)
 
         val json = JSONObject().apply {
             put("senderId", senderId)
             put("roomId", roomId)
             put("message", messageText)
+            put("createdAt", now) // 🔥 시간 명시
         }
 
         stompClient.send("/pub/chat.message", json.toString())

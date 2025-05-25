@@ -11,6 +11,7 @@ import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 
+
 class ChatRoomAdapter(
     private val items: List<ChatRoomItem>,
     private val onItemClick: (ChatRoomItem) -> Unit
