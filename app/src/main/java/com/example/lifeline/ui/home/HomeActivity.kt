@@ -19,16 +19,9 @@ class HomeActivity : ComponentActivity() {
 
         val callButton = findViewById<Button>(R.id.btn_call)
 
-        val prefs = getSharedPreferences("user_prefs", MODE_PRIVATE)
-        val name = prefs.getString("name", "")
-        val birthDate = prefs.getString("birthDate", "")
-        val protectorName = prefs.getString("protectorName", "")
-        val protectorContact = prefs.getString("protectorContact", "")
-        val socialWorkerName = prefs.getString("socialWorkerName", "")
-        val socialWorkerPhone = prefs.getString("socialWorkerPhone", "")
-
-
         callButton.setOnClickListener {
+            val prefs = getSharedPreferences("user_prefs", MODE_PRIVATE)
+            val socialWorkerPhone = prefs.getString("socialWorkerPhone", "")
             if (!socialWorkerPhone.isNullOrBlank()) {
                 val intent = Intent(Intent.ACTION_DIAL)
                 intent.data = Uri.parse("tel:$socialWorkerPhone")
@@ -37,14 +30,6 @@ class HomeActivity : ComponentActivity() {
                 Toast.makeText(this, "사회복지사 전화번호가 저장되어 있지 않습니다.", Toast.LENGTH_SHORT).show()
             }
         }
-
-
-        findViewById<TextView>(R.id.tv_user_name).text = name
-        findViewById<TextView>(R.id.my_birth).text = birthDate
-        findViewById<TextView>(R.id.protector_name).text = protectorName
-        findViewById<TextView>(R.id.protector_phone).text = protectorContact
-        findViewById<TextView>(R.id.social_worker_name).text = socialWorkerName
-        findViewById<TextView>(R.id.social_worker_phone).text = socialWorkerPhone
 
         findViewById<Button>(R.id.health_check).setOnClickListener {
             startActivity(Intent(this, HealthManageActivity::class.java))
@@ -58,4 +43,20 @@ class HomeActivity : ComponentActivity() {
             startActivity(Intent(this, ChatListActivity::class.java))
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        updateUserInfoUI()
+    }
+
+    private fun updateUserInfoUI() {
+        val prefs = getSharedPreferences("user_prefs", MODE_PRIVATE)
+        findViewById<TextView>(R.id.tv_user_name).text = prefs.getString("name", "")
+        findViewById<TextView>(R.id.my_birth).text = prefs.getString("birthDate", "")
+        findViewById<TextView>(R.id.protector_name).text = prefs.getString("protectorName", "")
+        findViewById<TextView>(R.id.protector_phone).text = prefs.getString("protectorContact", "")
+        findViewById<TextView>(R.id.social_worker_name).text = prefs.getString("socialWorkerName", "")
+        findViewById<TextView>(R.id.social_worker_phone).text = prefs.getString("socialWorkerPhone", "")
+    }
 }
+

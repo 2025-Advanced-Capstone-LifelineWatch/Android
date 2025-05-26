@@ -6,11 +6,14 @@ import com.example.lifeline.network.dto.ChatRoomListResponse
 import com.example.lifeline.network.dto.FcmTokenUpdate
 import com.example.lifeline.network.dto.LoginRequest
 import com.example.lifeline.network.dto.LoginResponse
+import com.example.lifeline.network.dto.MyInfoUpdate
+import com.example.lifeline.network.dto.PasswordUpdate
 import com.example.lifeline.network.dto.SignupRequest
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
 import com.example.lifeline.network.dto.VerifyCodeRequest
+import com.example.lifeline.network.dto.VerifyRequest
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.PATCH
@@ -52,4 +55,19 @@ interface ApiService {
         @Path("roomId") roomId: Long,
         @Header("Authorization") authHeader: String
     ): Response<ApiResponse<List<ChatMessageResponse>>>
+
+    @POST("api/auth/verify-identity")
+    suspend fun verifyIdentify(
+        @Body request: VerifyRequest
+    ): Response<Void>
+
+    @PATCH("api/user/me")
+    suspend fun updateMyInfo(
+        @Body request: MyInfoUpdate
+    ): Response<Void>
+
+    @PATCH("api/auth/password/change")
+    suspend fun updatePassword(
+        @Body request: PasswordUpdate
+    ): Response<Void>
 }

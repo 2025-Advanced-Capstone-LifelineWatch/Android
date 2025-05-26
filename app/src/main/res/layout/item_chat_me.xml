@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:text="오전 11:24"
         android:textSize="11sp"
-        android:textColor="@color/black"
+        android:textColor="#999999"
         android:layout_marginTop="2dp"
         android:gravity="end" />
 </LinearLayout>

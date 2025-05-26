@@ -94,6 +94,9 @@
         <activity android:name=".ui.mypage.detailed.notice.NoticeDetailActivity" />
         <activity android:name=".ui.chat.socket.ChatRoomActivity"/>
         <activity android:name=".ui.chat.ChatListActivity"/>
+        <activity android:name=".ui.mypage.detailed.EditProfileActivity"/>
+        <activity android:name=".ui.mypage.detailed.PasswordChangeActivity"/>
+        <activity android:name=".ui.mypage.detailed.VerificationActivity"/>
         <service
             android:name=".service.HealthDataService"
             android:foregroundServiceType="dataSync"

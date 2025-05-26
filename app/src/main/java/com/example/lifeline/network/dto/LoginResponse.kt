@@ -13,5 +13,7 @@ data class UserInfo(
     val socialWorkerName: String,
     val socialWorkerPhone: String,
     val userId: Int,
-    val isSocialWorker: Boolean
+    val isSocialWorker: Boolean,
+    val phoneNumber: String,
+    val address: String
 )

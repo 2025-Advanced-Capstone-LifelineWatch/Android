@@ -3,7 +3,6 @@ package com.example.lifeline.ui.mypage
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.ComponentActivity
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -11,6 +10,7 @@ import com.example.lifeline.R
 import com.example.lifeline.ui.mypage.detailed.PrivacyPolicyActivity
 import com.example.lifeline.ui.mypage.detailed.TermsActivity
 import com.example.lifeline.ui.mypage.detailed.notice.NoticeActivity
+import com.example.lifeline.ui.mypage.detailed.VerificationActivity
 
 class MyPageActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
@@ -24,6 +24,16 @@ class MyPageActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.recyclerView)
         adapter = MyPageAdapter(getItems()) { item ->
             when (item.text) {
+                "개인정보 수정" -> {
+                    val intent = Intent(this, VerificationActivity::class.java)
+                    intent.putExtra("destination", "edit_profile")
+                    startActivity(intent)
+                }
+                "비밀번호 변경" -> {
+                    val intent = Intent(this, VerificationActivity::class.java)
+                    intent.putExtra("destination", "change_password")
+                    startActivity(intent)
+                }
                 "새로운 소식 확인" -> {
                     val intent = Intent(this, NoticeActivity::class.java)
                     startActivity(intent)
@@ -41,7 +51,6 @@ class MyPageActivity : AppCompatActivity() {
                 }
             }
         }
-
 
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter

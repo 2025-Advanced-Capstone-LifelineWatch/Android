@@ -6,6 +6,6 @@ data class ChatMessage(
     val createdAt: String,
     val isMe: Boolean = false,
     val profileImageUrl: String? = null,
-    val isDateHeader: Boolean = false // ✅ 날짜 구분용
+    val isDateHeader: Boolean = false
 )
 
