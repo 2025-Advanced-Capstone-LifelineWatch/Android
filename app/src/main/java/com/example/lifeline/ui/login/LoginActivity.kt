@@ -66,6 +66,8 @@ class LoginActivity : ComponentActivity() {
                                 putString("socialWorkerPhone", user.socialWorkerPhone)
                                 putInt("userId", user.userId)
                                 putBoolean("isSocialWorker", user.isSocialWorker)
+                                putString("phoneNumber", user.phoneNumber)
+                                putString("address", user.address)
                                 apply()
                             }
 
