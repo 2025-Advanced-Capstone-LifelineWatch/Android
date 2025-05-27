@@ -1,3 +1,4 @@
+
 package com.example.lifeline.ui.chat.socket
 
 import android.os.Handler
@@ -73,8 +74,14 @@ class ChatSocketManager(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ topicMessage ->
                 Log.d(TAG, "📥 수신된 메시지 = ${topicMessage.payload}")
+
                 try {
                     val data = JSONObject(topicMessage.payload)
+                    if (data.getLong("senderId") == currentUserId) {
+                        Log.d(TAG, "👤 내 메시지라 무시")
+                        return@subscribe
+                    }
+
                     val message = ChatMessage(
                         message = data.getString("message"),
                         senderName = data.getString("senderName"),
@@ -100,7 +107,7 @@ class ChatSocketManager(
         val now = OffsetDateTime.now().format(DateTimeFormatter.ISO_OFFSET_DATE_TIME)
 
         val json = JSONObject().apply {
-            put("senderId", senderId)
+            put("userId", senderId)
             put("roomId", roomId)
             put("message", messageText)
             put("createdAt", now) // 🔥 시간 명시

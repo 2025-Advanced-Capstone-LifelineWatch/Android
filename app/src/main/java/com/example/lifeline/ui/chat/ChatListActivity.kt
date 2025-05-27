@@ -28,6 +28,11 @@ class ChatListActivity : AppCompatActivity() {
         fetchChatList()
     }
 
+    override fun onResume() {
+        super.onResume()
+        fetchChatList()
+    }
+
     private fun fetchChatList() {
         lifecycleScope.launch {
             try {
