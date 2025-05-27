@@ -122,6 +122,7 @@ class MedicineDetailActivity : AppCompatActivity() {
                         val response = RetrofitClient.apiService.updateAlarmGroup(groupId, request)
                         if (response.isSuccessful) {
                             Toast.makeText(this@MedicineDetailActivity, "수정 완료", Toast.LENGTH_SHORT).show()
+                            setResult(RESULT_OK)
                             finish()
                         } else {
                             Toast.makeText(this@MedicineDetailActivity, "수정 실패: ${response.code()}", Toast.LENGTH_SHORT).show()
@@ -135,6 +136,7 @@ class MedicineDetailActivity : AppCompatActivity() {
                 btnEdit.text = "저장"
             }
             isEditMode = !isEditMode
+
         }
 
         btnDelete.setOnClickListener {
@@ -159,6 +161,7 @@ class MedicineDetailActivity : AppCompatActivity() {
                 }
                 .setNegativeButton("취소", null)
                 .show()
+
         }
     }
 

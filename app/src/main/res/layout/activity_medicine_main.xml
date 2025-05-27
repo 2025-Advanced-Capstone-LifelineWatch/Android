@@ -87,23 +87,8 @@
                 android:textSize="20sp"
                 android:layout_marginEnd="8dp" />
 
-            <TextView
-                android:id="@+id/sep"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="|"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:layout_marginEnd="8dp" />
 
-            <TextView
-                android:id="@+id/btnEdit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="편집"
-                android:textColor="@color/black"
-                android:layout_marginEnd="8dp"
-                android:textSize="20sp" />
+
         </LinearLayout>
 
 

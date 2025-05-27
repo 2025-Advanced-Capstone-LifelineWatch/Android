@@ -3,18 +3,16 @@ package com.example.lifeline.ui.medicine
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lifeline.R
 import com.example.lifeline.network.RetrofitClient
-import com.example.lifeline.network.dto.Alarm
-import com.example.lifeline.network.dto.AlarmGroup
 import com.example.lifeline.ui.medicine.dto.GroupedRoutineItem
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -31,6 +29,22 @@ class MedicineRoutineActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var addBtn: TextView
 
+    // ✅ DetailActivity 결과 콜백 등록
+    private val detailActivityLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                loadGroupedRoutines()
+            }
+        }
+
+    // ✅ RegisterActivity 결과 콜백 등록
+    private val registerActivityLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                loadGroupedRoutines()
+            }
+        }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
@@ -44,7 +58,7 @@ class MedicineRoutineActivity : AppCompatActivity() {
 
         addBtn.setOnClickListener {
             val intent = Intent(this, RegisterMedicineActivity::class.java)
-            startActivityForResult(intent, 100)
+            registerActivityLauncher.launch(intent)
         }
 
         val sharedPref = getSharedPreferences("user_prefs", MODE_PRIVATE)
@@ -105,6 +119,7 @@ class MedicineRoutineActivity : AppCompatActivity() {
                             alarmIds = group.alarms.mapNotNull { it.alarmId }
                         )
                     }
+
                     recyclerView.adapter = GroupedRoutineAdapter(
                         items = groupedItems,
                         onClick = { item ->
@@ -115,9 +130,9 @@ class MedicineRoutineActivity : AppCompatActivity() {
                                 putExtra("medicineNote", item.medicineNote)
                                 putStringArrayListExtra("times", ArrayList(item.rawTimes))
                             }
-                            startActivity(intent)
+                            detailActivityLauncher.launch(intent)
                         },
-                        scope = lifecycleScope // ✅ CoroutineScope 전달
+                        scope = lifecycleScope
                     )
                 } else {
                     Toast.makeText(this@MedicineRoutineActivity, "불러오기 실패", Toast.LENGTH_SHORT).show()
