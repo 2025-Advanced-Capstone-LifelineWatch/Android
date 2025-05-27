@@ -11,6 +11,7 @@ import com.example.lifeline.R
 import com.example.lifeline.ui.healthmanage.HealthManageActivity
 import com.example.lifeline.ui.mypage.MyPageActivity
 import com.example.lifeline.ui.chat.ChatListActivity
+import com.example.lifeline.ui.medicine.MedicineRoutineActivity
 
 class HomeActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,6 +30,9 @@ class HomeActivity : ComponentActivity() {
             } else {
                 Toast.makeText(this, "사회복지사 전화번호가 저장되어 있지 않습니다.", Toast.LENGTH_SHORT).show()
             }
+        }
+        findViewById<Button>(R.id.btn_medicine).setOnClickListener {
+            startActivity(Intent(this, MedicineRoutineActivity::class.java))
         }
 
         findViewById<Button>(R.id.health_check).setOnClickListener {

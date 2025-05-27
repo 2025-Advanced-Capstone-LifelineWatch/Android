@@ -1,0 +1,27 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/itemContainer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingVertical="8dp">
+
+    <!-- 시간 텍스트 -->
+    <TextView
+        android:id="@+id/tvTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="오전 8:30"
+        android:textColor="#6B21A8"
+        android:textSize="16sp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="4dp" />
+
+    <!-- 약 카드들 동적으로 추가될 곳 -->
+    <LinearLayout
+        android:id="@+id/groupedContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp" />
+</LinearLayout>

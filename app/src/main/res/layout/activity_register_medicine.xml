@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="15dp"
+    android:background="@android:color/white">
+
+    <!-- 상단 툴바 -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/rounded_toolbar_background">
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pretendard_semibold"
+            android:text="LifeLine"
+            android:textColor="@color/black"
+            android:textSize="30sp" />
+    </com.google.android.material.appbar.MaterialToolbar>
+
+    <!-- 스크롤 영역 -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="6dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- 타이틀 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="복용의약품 등록"
+                android:textSize="20sp"
+                android:fontFamily="@font/pretendard_semibold"
+                android:textColor="@color/black"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp" />
+
+
+            <!-- 카드: 약물명 / 별명 / 요일 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:background="@drawable/bg_card"
+                android:layout_marginBottom="16dp">
+
+                <EditText
+                    android:id="@+id/inputMedicineName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendard_medium"
+                    android:hint="약물명"
+                    android:textSize="16sp"
+                    android:background="@null"
+                    android:paddingVertical="12dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="#DDDDDD" />
+
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="#DDDDDD" />
+
+                <TextView
+                    android:id="@+id/tvRepeatCycle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendard_medium"
+                    android:text="섭취 요일: 매일"
+                    android:textSize="16sp"
+                    android:paddingVertical="12dp"
+                    android:background="?selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true" />
+            </LinearLayout>
+
+            <!-- 카드: 섭취 횟수 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:background="@drawable/bg_card"
+                android:layout_marginBottom="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="섭취 횟수"
+                    android:fontFamily="@font/pretendard_medium"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="8dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical|end">
+
+                    <Button
+                        android:id="@+id/btnMinus"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:text="-" />
+
+                    <TextView
+                        android:id="@+id/tvCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3"
+                        android:textSize="18sp"
+                        android:layout_marginHorizontal="16dp" />
+
+                    <Button
+                        android:id="@+id/btnPlus"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:text="+" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/timeContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="12dp" />
+            </LinearLayout>
+
+            <!-- 메모 -->
+            <EditText
+                android:id="@+id/inputNote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="메모 (예: 인슐린 지속형)"
+                android:fontFamily="@font/pretendard_medium"
+                android:minLines="2"
+                android:background="@drawable/bg_card"
+                android:padding="16dp"
+                android:layout_marginBottom="16dp" />
+
+            <!-- 등록 버튼 -->
+            <Button
+                android:id="@+id/btnRegister"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="등록"
+                android:background="@drawable/btn_next_selector"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
