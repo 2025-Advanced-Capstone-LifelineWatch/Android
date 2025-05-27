@@ -97,6 +97,9 @@
         <activity android:name=".ui.mypage.detailed.EditProfileActivity"/>
         <activity android:name=".ui.mypage.detailed.PasswordChangeActivity"/>
         <activity android:name=".ui.mypage.detailed.VerificationActivity"/>
+        <activity android:name=".ui.medicine.MedicineRoutineActivity"/>
+        <activity android:name=".ui.medicine.RegisterMedicineActivity"/>
+        <activity android:name=".ui.medicine.MedicineDetailActivity"/>
         <service
             android:name=".service.HealthDataService"
             android:foregroundServiceType="dataSync"

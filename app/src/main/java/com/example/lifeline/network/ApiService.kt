@@ -1,5 +1,6 @@
 package com.example.lifeline.network
 
+import com.example.lifeline.network.dto.AlarmGroupResponse
 import com.example.lifeline.network.dto.ApiResponse
 import com.example.lifeline.network.dto.ChatMessageResponse
 import com.example.lifeline.network.dto.ChatRoomListResponse
@@ -8,7 +9,9 @@ import com.example.lifeline.network.dto.LoginRequest
 import com.example.lifeline.network.dto.LoginResponse
 import com.example.lifeline.network.dto.MyInfoUpdate
 import com.example.lifeline.network.dto.PasswordUpdate
+import com.example.lifeline.network.dto.RegisterMedicineRequest
 import com.example.lifeline.network.dto.SignupRequest
+import com.example.lifeline.network.dto.UpdateAlarmGroupRequest
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
@@ -17,6 +20,7 @@ import com.example.lifeline.network.dto.VerifyRequest
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.PATCH
+import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -70,4 +74,19 @@ interface ApiService {
     suspend fun updatePassword(
         @Body request: PasswordUpdate
     ): Response<Void>
+
+    @POST("api/alarm/group")
+    suspend fun registerMedicineGroup(
+        @Body request: RegisterMedicineRequest
+    ): Response<Void>
+
+    @GET("api/alarm/group")
+    suspend fun getMedicineGroups(): Response<AlarmGroupResponse>
+
+    @PUT("api/alarm/group/{groupId}/alarm")
+    suspend fun updateAlarmGroup(
+        @Path("groupId") groupId: Long,
+        @Body request: UpdateAlarmGroupRequest
+    ): Response<Unit>
+
 }
