@@ -5,6 +5,8 @@ data class GroupedRoutineItem(
     val medicineName: String,
     val repeatCycle: String,
     val medicineNote: String,
-    val times: List<String>,     // "오전 9:00" 등 표시용
-    val rawTimes: List<String>   // "09:00" 등 서버용
+    val times: List<String>,
+    val rawTimes: List<String>,
+    val alarmIds: List<Long>
+
 )

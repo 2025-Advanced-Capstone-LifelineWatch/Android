@@ -31,11 +31,6 @@ class MedicineRoutineActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var addBtn: TextView
 
-    companion object {
-        private const val REQUEST_CODE_REGISTER = 100
-        private const val REQUEST_CODE_DETAIL = 101
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
@@ -49,7 +44,7 @@ class MedicineRoutineActivity : AppCompatActivity() {
 
         addBtn.setOnClickListener {
             val intent = Intent(this, RegisterMedicineActivity::class.java)
-            startActivityForResult(intent, REQUEST_CODE_REGISTER)
+            startActivityForResult(intent, 100)
         }
 
         val sharedPref = getSharedPreferences("user_prefs", MODE_PRIVATE)
@@ -106,20 +101,24 @@ class MedicineRoutineActivity : AppCompatActivity() {
                             repeatCycle = group.repeatCycle,
                             medicineNote = group.medicineNote ?: "",
                             times = parsedTimes.map { it.first },
-                            rawTimes = parsedTimes.map { it.second }
+                            rawTimes = parsedTimes.map { it.second },
+                            alarmIds = group.alarms.mapNotNull { it.alarmId }
                         )
                     }
-
-                    recyclerView.adapter = GroupedRoutineAdapter(groupedItems) { item ->
-                        val intent = Intent(this@MedicineRoutineActivity, MedicineDetailActivity::class.java).apply {
-                            putExtra("groupId", item.groupId)
-                            putExtra("medicineName", item.medicineName)
-                            putExtra("repeatCycle", item.repeatCycle)
-                            putExtra("medicineNote", item.medicineNote)
-                            putStringArrayListExtra("times", ArrayList(item.rawTimes))
-                        }
-                        startActivityForResult(intent, REQUEST_CODE_DETAIL)
-                    }
+                    recyclerView.adapter = GroupedRoutineAdapter(
+                        items = groupedItems,
+                        onClick = { item ->
+                            val intent = Intent(this@MedicineRoutineActivity, MedicineDetailActivity::class.java).apply {
+                                putExtra("groupId", item.groupId)
+                                putExtra("medicineName", item.medicineName)
+                                putExtra("repeatCycle", item.repeatCycle)
+                                putExtra("medicineNote", item.medicineNote)
+                                putStringArrayListExtra("times", ArrayList(item.rawTimes))
+                            }
+                            startActivity(intent)
+                        },
+                        scope = lifecycleScope // ✅ CoroutineScope 전달
+                    )
                 } else {
                     Toast.makeText(this@MedicineRoutineActivity, "불러오기 실패", Toast.LENGTH_SHORT).show()
                 }
@@ -128,13 +127,4 @@ class MedicineRoutineActivity : AppCompatActivity() {
             }
         }
     }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == REQUEST_CODE_REGISTER || requestCode == REQUEST_CODE_DETAIL) {
-            loadGroupedRoutines()
-        }
-    }
 }
-

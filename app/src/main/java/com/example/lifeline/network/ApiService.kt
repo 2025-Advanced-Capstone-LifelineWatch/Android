@@ -93,6 +93,11 @@ interface ApiService {
     @DELETE("/api/alarm/group/{groupId}")
     suspend fun deleteAlarmGroup(
         @Path("groupId") groupId: Long
-    ): retrofit2.Response<Unit>
+    ): Response<Unit>
+
+    @PATCH("/api/alarm/group/alarm/{alarmId}/complete")
+    suspend fun completeAlarm(
+        @Path("alarmId") alarmId: Long
+    ): Response<Unit>
 
 }
