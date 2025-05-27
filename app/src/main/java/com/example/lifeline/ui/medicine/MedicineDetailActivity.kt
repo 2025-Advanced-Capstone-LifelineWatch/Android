@@ -138,9 +138,27 @@ class MedicineDetailActivity : AppCompatActivity() {
         }
 
         btnDelete.setOnClickListener {
-            Toast.makeText(this, "삭제 완료 (구현 필요)", Toast.LENGTH_SHORT).show()
-            setResult(RESULT_OK)
-            finish()
+            AlertDialog.Builder(this)
+                .setTitle("정말 삭제하시겠습니까?")
+                .setMessage("삭제하면 이 약 복용 루틴은 복구되지 않습니다.")
+                .setPositiveButton("삭제") { _, _ ->
+                    lifecycleScope.launch {
+                        try {
+                            val response = RetrofitClient.apiService.deleteAlarmGroup(groupId)
+                            if (response.isSuccessful) {
+                                Toast.makeText(this@MedicineDetailActivity, "삭제 완료", Toast.LENGTH_SHORT).show()
+                                setResult(RESULT_OK)
+                                finish()
+                            } else {
+                                Toast.makeText(this@MedicineDetailActivity, "삭제 실패: ${response.code()}", Toast.LENGTH_SHORT).show()
+                            }
+                        } catch (e: Exception) {
+                            Toast.makeText(this@MedicineDetailActivity, "네트워크 오류 발생", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+                .setNegativeButton("취소", null)
+                .show()
         }
     }
 
@@ -153,7 +171,6 @@ class MedicineDetailActivity : AppCompatActivity() {
             else -> "매일" // 기본값
         }
     }
-
     private fun setEditable(editable: Boolean) {
         inputMedicineName.isEnabled = editable
         inputNote.isEnabled = editable

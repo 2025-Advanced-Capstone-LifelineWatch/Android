@@ -17,6 +17,7 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 import com.example.lifeline.network.dto.VerifyCodeRequest
 import com.example.lifeline.network.dto.VerifyRequest
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.PATCH
@@ -88,5 +89,10 @@ interface ApiService {
         @Path("groupId") groupId: Long,
         @Body request: UpdateAlarmGroupRequest
     ): Response<Unit>
+
+    @DELETE("/api/alarm/group/{groupId}")
+    suspend fun deleteAlarmGroup(
+        @Path("groupId") groupId: Long
+    ): retrofit2.Response<Unit>
 
 }
