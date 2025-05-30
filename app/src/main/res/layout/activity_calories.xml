@@ -3,76 +3,139 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:background="@color/background_primary"
+    android:padding="20dp">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar"
+    <!-- 상단 툴바 -->
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/rounded_toolbar_background">
+        app:cardCornerRadius="20dp"
+        app:cardElevation="8dp"
+        app:cardBackgroundColor="@color/surface_primary"
+        android:layout_marginBottom="24dp">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:paddingHorizontal="24dp">
+
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="LifeLine"
+                android:textColor="@color/text_primary"
+                android:textSize="28sp"
+                android:letterSpacing="0.02" />
+        </com.google.android.material.appbar.MaterialToolbar>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- 날짜 선택 영역 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="20dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_select_date"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:text="날짜 선택"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/accent_primary"
+            app:cornerRadius="24dp"
+            app:icon="@drawable/ic_calendar"
+            app:iconGravity="textStart"
+            app:iconTint="@color/white"
+            android:paddingHorizontal="20dp"
+            android:layout_marginEnd="16dp" />
 
         <TextView
-            android:id="@+id/toolbar_title"
-            android:layout_width="wrap_content"
+            android:id="@+id/tv_selected_date"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/pretendard_semibold"
-            android:text="LifeLine"
-            android:textColor="@color/black"
-            android:textSize="30sp" />
-    </com.google.android.material.appbar.MaterialToolbar>
+            android:layout_weight="1"
+            android:text="선택된 날짜 없음"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_primary"
+            android:fontFamily="@font/pretendard_medium" />
+    </LinearLayout>
 
-    <Button
-        android:id="@+id/btn_select_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="날짜 선택"
-        android:textSize="16sp"
-        android:layout_marginTop="12dp"
-        android:backgroundTint="@color/purple_200"
-        android:textColor="@android:color/white" />
-
-    <!-- 선택된 날짜 표시 -->
-    <TextView
-        android:id="@+id/tv_selected_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="선택된 날짜 없음"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:textColor="@android:color/black" />
-
-    <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/calories_chart"
+    <!-- 칼로리 그래프 카드 -->
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_marginTop="16dp" />
+        android:layout_height="340dp"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="12dp"
+        app:cardBackgroundColor="@color/surface_primary"
+        android:layout_marginBottom="24dp">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar_temp_title"
-        android:layout_width="175dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:background="@drawable/rounded_toolbar_background">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="칼로리 소모 추이"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary"
+                android:fontFamily="@font/pretendard_semibold"
+                android:layout_marginBottom="16dp" />
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/calories_chart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- 칼로리 기록 섹션 헤더 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="16dp">
+
+        <View
+            android:layout_width="4dp"
+            android:layout_height="24dp"
+            android:background="@drawable/gradient_accent"
+            android:layout_marginEnd="12dp" />
 
         <TextView
             android:id="@+id/temp_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="칼로리 소모 누적 기록"
-            android:textSize="16sp"
-            android:textColor="@color/black" />
-    </com.google.android.material.appbar.MaterialToolbar>
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_primary"
+            android:fontFamily="@font/pretendard_semibold" />
+    </LinearLayout>
 
+    <!-- 칼로리 요약 리스트 -->
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
 
         <LinearLayout
             android:id="@+id/calories_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" />
+            android:orientation="vertical"
+            android:paddingBottom="24dp" />
     </ScrollView>
 </LinearLayout>

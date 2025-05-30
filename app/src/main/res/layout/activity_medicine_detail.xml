@@ -4,178 +4,305 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="15dp"
-    android:background="@android:color/white">
+    android:background="@color/background_primary">
 
     <!-- 상단 툴바 -->
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar"
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_marginTop="4dp"
-        android:background="@drawable/rounded_toolbar_background">
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="8dp"
+        app:cardBackgroundColor="@color/surface_primary">
 
-        <TextView
-            android:id="@+id/toolbar_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/pretendard_semibold"
-            android:text="LifeLine"
-            android:textColor="@color/black"
-            android:textSize="30sp" />
-    </com.google.android.material.appbar.MaterialToolbar>
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:paddingHorizontal="20dp"
+            app:navigationIcon="@drawable/baseline_arrow_back_24"
+            app:navigationIconTint="@color/text_primary">
+
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="LifeLine"
+                android:textColor="@color/text_primary"
+                android:textSize="24sp"
+                android:letterSpacing="0.02" />
+        </com.google.android.material.appbar.MaterialToolbar>
+    </com.google.android.material.card.MaterialCardView>
 
     <!-- 스크롤 영역 -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:padding="6dp">
+        android:scrollbars="none"
+        android:padding="20dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- 타이틀 -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="복용의약품 정보"
-                android:textSize="20sp"
-                android:fontFamily="@font/pretendard_semibold"
-                android:textColor="@color/black"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp" />
-
-
-            <!-- 카드: 약물명 / 별명 / 요일 -->
+            <!-- 페이지 타이틀 -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp"
-                android:background="@drawable/bg_card"
-                android:layout_marginBottom="16dp">
-
-                <EditText
-                    android:id="@+id/inputMedicineName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/pretendard_medium"
-                    android:hint="약물명"
-                    android:textSize="16sp"
-                    android:background="@null"
-                    android:paddingVertical="12dp" />
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="24dp">
 
                 <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="#DDDDDD" />
-
-
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="#DDDDDD" />
-
-                <TextView
-                    android:id="@+id/tvRepeatCycle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/pretendard_medium"
-                    android:text="섭취 요일: 매일"
-                    android:textSize="16sp"
-                    android:paddingVertical="12dp"
-                    android:background="?selectableItemBackground"
-                    android:clickable="true"
-                    android:focusable="true" />
-            </LinearLayout>
-
-            <!-- 카드: 섭취 횟수 -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp"
-                android:background="@drawable/bg_card"
-                android:layout_marginBottom="16dp">
+                    android:layout_width="4dp"
+                    android:layout_height="28dp"
+                    android:background="@drawable/gradient_accent"
+                    android:layout_marginEnd="12dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="섭취 횟수"
-                    android:fontFamily="@font/pretendard_medium"
-                    android:textSize="16sp"
-                    android:layout_marginBottom="8dp" />
+                    android:text="복용의약품 정보"
+                    android:textSize="22sp"
+                    android:fontFamily="@font/pretendard_bold"
+                    android:textColor="@color/text_primary"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- 약물 기본정보 카드 -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="8dp"
+                app:cardBackgroundColor="@color/surface_primary"
+                android:layout_marginBottom="16dp">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical|end">
-
-                    <Button
-                        android:id="@+id/btnMinus"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:text="-" />
-
-                    <TextView
-                        android:id="@+id/tvCount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="3"
-                        android:textSize="18sp"
-                        android:layout_marginHorizontal="16dp" />
-
-                    <Button
-                        android:id="@+id/btnPlus"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:text="+" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/timeContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_marginTop="12dp" />
-            </LinearLayout>
+                    android:padding="20dp">
 
-            <!-- 메모 -->
-            <EditText
-                android:id="@+id/inputNote"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="약물 정보"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/accent_primary"
+                        android:fontFamily="@font/pretendard_bold"
+                        android:layout_marginBottom="16dp" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="약물명"
+                        app:boxBackgroundMode="filled"
+                        app:boxBackgroundColor="@color/background_secondary"
+                        app:boxCornerRadiusTopStart="12dp"
+                        app:boxCornerRadiusTopEnd="12dp"
+                        app:boxCornerRadiusBottomStart="12dp"
+                        app:boxCornerRadiusBottomEnd="12dp"
+                        app:boxStrokeWidth="0dp"
+                        app:boxStrokeWidthFocused="2dp"
+                        app:boxStrokeColor="@color/accent_primary"
+                        android:layout_marginBottom="16dp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/inputMedicineName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/pretendard_medium"
+                            android:textSize="16sp"
+                            android:textColor="@color/text_primary" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/tvRepeatCycle"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:text="섭취 요일: 매일"
+                        android:textSize="16sp"
+                        android:textColor="@color/accent_primary"
+                        android:fontFamily="@font/pretendard_medium"
+                        android:backgroundTint="@color/background_secondary"
+                        app:cornerRadius="12dp"
+                        app:strokeColor="@color/accent_primary"
+                        app:strokeWidth="1dp"
+                        android:gravity="start|center_vertical"
+                        app:icon="@drawable/ic_calendar"
+                        app:iconGravity="textStart"
+                        app:iconTint="@color/accent_primary" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- 섭취 횟수 카드 -->
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="메모 (예: 인슐린 지속형)"
-                android:fontFamily="@font/pretendard_medium"
-                android:minLines="2"
-                android:background="@drawable/bg_card"
-                android:padding="16dp"
-                android:layout_marginBottom="16dp" />
+                app:cardCornerRadius="20dp"
+                app:cardElevation="8dp"
+                app:cardBackgroundColor="@color/surface_primary"
+                android:layout_marginBottom="16dp">
 
-            <!-- 등록 버튼 -->
-            <Button
-                android:id="@+id/btnEdit"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:text="수정"
-                android:background="@drawable/btn_next_selector"
-                android:textColor="@color/white"
-                android:textSize="16sp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
 
-            <Button
-                android:id="@+id/btnDel"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="섭취 횟수"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/accent_primary"
+                        android:fontFamily="@font/pretendard_bold"
+                        android:layout_marginBottom="16dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="16dp">
+
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/btnMinus"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_remove"
+                            app:backgroundTint="@color/accent_secondary"
+                            app:tint="@color/white"
+                            app:fabSize="mini" />
+
+                        <TextView
+                            android:id="@+id/tvCount"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="3"
+                            android:textSize="24sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/text_primary"
+                            android:fontFamily="@font/pretendard_bold"
+                            android:gravity="center" />
+
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/btnPlus"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_add"
+                            app:backgroundTint="@color/accent_primary"
+                            app:tint="@color/white"
+                            app:fabSize="mini" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/timeContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- 메모 카드 -->
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:text="삭제"
-                android:background="@drawable/btn_next_selector"
-                android:textColor="@color/white"
-                android:layout_marginTop="7dp"
-                android:textSize="16sp" />
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="8dp"
+                app:cardBackgroundColor="@color/surface_primary"
+                android:layout_marginBottom="24dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="메모"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/accent_primary"
+                        android:fontFamily="@font/pretendard_bold"
+                        android:layout_marginBottom="12dp" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="메모 (예: 인슐린 지속형)"
+                        app:boxBackgroundMode="filled"
+                        app:boxBackgroundColor="@color/background_secondary"
+                        app:boxCornerRadiusTopStart="12dp"
+                        app:boxCornerRadiusTopEnd="12dp"
+                        app:boxCornerRadiusBottomStart="12dp"
+                        app:boxCornerRadiusBottomEnd="12dp"
+                        app:boxStrokeWidth="0dp"
+                        app:boxStrokeWidthFocused="2dp"
+                        app:boxStrokeColor="@color/accent_primary">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/inputNote"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minLines="3"
+                            android:gravity="top"
+                            android:fontFamily="@font/pretendard_medium"
+                            android:textSize="14sp"
+                            android:textColor="@color/text_primary" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- 버튼 영역 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- 수정 버튼 -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnEdit"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:text="수정"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/pretendard_bold"
+                    android:backgroundTint="@color/accent_primary"
+                    app:cornerRadius="16dp"
+                    app:icon="@drawable/ic_edit"
+                    app:iconGravity="textStart"
+                    app:iconTint="@color/white"
+                    android:layout_marginBottom="12dp" />
+
+                <!-- 삭제 버튼 -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnDel"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:text="삭제"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/error"
+                    android:fontFamily="@font/pretendard_bold"
+                    android:backgroundTint="@color/surface_primary"
+                    app:cornerRadius="16dp"
+                    app:strokeColor="@color/error"
+                    app:strokeWidth="2dp"
+                    app:icon="@drawable/ic_delete"
+                    app:iconGravity="textStart"
+                    app:iconTint="@color/error" />
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

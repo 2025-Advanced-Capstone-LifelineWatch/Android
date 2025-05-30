@@ -1,162 +1,314 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- fragment_signup_step2.xml -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8F9FA"
-    >
+    android:background="@color/background_primary"
+    android:scrollbars="none">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="15dp">
+        android:padding="20dp">
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar"
+        <!-- 상단 툴바 -->
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_marginTop="4dp"
-            android:background="@drawable/rounded_toolbar_background">
-
-            <TextView
-                android:id="@+id/toolbar_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/pretendard_semibold"
-                android:text="LifeLine"
-                android:textColor="@color/black"
-                android:textSize="30sp" />
-        </com.google.android.material.appbar.MaterialToolbar>
-
-        <TextView
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="24dp"
-            android:text="회원가입"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            app:cardCornerRadius="20dp"
+            app:cardElevation="8dp"
+            app:cardBackgroundColor="@color/surface_primary"
+            android:layout_marginBottom="32dp">
 
-        <!-- 아이디 -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="아이디"
-            android:textSize="14sp"
-            android:layout_marginBottom="4dp" />
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="72dp"
+                android:paddingHorizontal="24dp">
 
-        <EditText
-            android:id="@+id/input_id"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:background="@drawable/button_white_rounded"
-            android:hint="아이디를 입력해주세요."
-            android:padding="12dp"
-            android:textSize="14sp"
-            android:layout_marginBottom="16dp" />
+                <TextView
+                    android:id="@+id/toolbar_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendard_semibold"
+                    android:text="LifeLine"
+                    android:textColor="@color/text_primary"
+                    android:textSize="28sp"
+                    android:letterSpacing="0.02" />
+            </com.google.android.material.appbar.MaterialToolbar>
+        </com.google.android.material.card.MaterialCardView>
 
-        <!-- 비밀번호 -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="비밀번호"
-            android:textSize="14sp"
-            android:layout_marginBottom="4dp" />
-
-        <EditText
-            android:id="@+id/input_pw"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:background="@drawable/button_white_rounded"
-            android:hint="비밀번호를 입력해주세요."
-            android:padding="12dp"
-            android:textSize="14sp"
-            android:inputType="textPassword"
-            android:layout_marginBottom="16dp" />
-
-        <!-- 비밀번호 확인 -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="비밀번호 확인"
-            android:textSize="14sp"
-            android:layout_marginBottom="4dp" />
-
-        <EditText
-            android:id="@+id/input_pw_re"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:background="@drawable/button_white_rounded"
-            android:hint="비밀번호를 다시 입력해주세요."
-            android:padding="12dp"
-            android:textSize="14sp"
-            android:inputType="textPassword"
-            android:layout_marginBottom="16dp" />
-
-        <!-- 주민번호 -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="주민번호"
-            android:textSize="14sp"
-            android:layout_marginBottom="4dp" />
-
-        <EditText
-            android:id="@+id/input_rrn"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:background="@drawable/button_white_rounded"
-            android:hint="주민번호를 입력해주세요."
-            android:padding="12dp"
-            android:textSize="14sp"
-            android:inputType="number"
-            android:layout_marginBottom="16dp" />
-
-        <!-- 성별 -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="성별"
-            android:textSize="14sp"
-            android:layout_marginBottom="4dp" />
-
+        <!-- 단계 표시기 -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginBottom="24dp"
-            android:weightSum="2">
+            android:gravity="center"
+            android:layout_marginBottom="24dp">
 
-            <Button
-                android:id="@+id/btn_male"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="48dp"
-                android:text="남성"
-                android:background="@drawable/btn_gender_unselected"
-                android:textColor="@android:color/white" />
+            <View
+                android:layout_width="40dp"
+                android:layout_height="4dp"
+                android:background="@color/accent_primary"
+                android:layout_marginEnd="8dp" />
 
-            <Button
-                android:id="@+id/btn_female"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="48dp"
-                android:layout_marginStart="8dp"
-                android:background="@drawable/btn_gender_unselected"
-                android:text="여성"
-                android:textColor="@color/white" />
+            <View
+                android:layout_width="40dp"
+                android:layout_height="4dp"
+                android:background="@color/accent_primary"
+                android:layout_marginEnd="8dp" />
+
+            <View
+                android:layout_width="40dp"
+                android:layout_height="4dp"
+                android:background="@color/background_secondary" />
         </LinearLayout>
 
-        <Button
-            android:id="@+id/btn_register_2"
+        <!-- 회원가입 폼 카드 -->
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:text="다음"
-            android:background="@drawable/btn_next_selector"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="24dp"
+            app:cardElevation="12dp"
+            app:cardBackgroundColor="@color/surface_primary">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="24dp">
+
+                <!-- 회원가입 타이틀 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="24dp">
+
+                    <View
+                        android:layout_width="4dp"
+                        android:layout_height="28dp"
+                        android:background="@drawable/gradient_accent"
+                        android:layout_marginEnd="12dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="회원가입 (2/3)"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/text_primary"
+                        android:fontFamily="@font/pretendard_bold" />
+                </LinearLayout>
+
+                <!-- 아이디 입력 -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="아이디"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_primary"
+                    android:fontFamily="@font/pretendard_semibold"
+                    android:layout_marginBottom="8dp" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    app:boxBackgroundMode="filled"
+                    app:boxBackgroundColor="@color/background_secondary"
+                    app:boxCornerRadiusTopStart="12dp"
+                    app:boxCornerRadiusTopEnd="12dp"
+                    app:boxCornerRadiusBottomStart="12dp"
+                    app:boxCornerRadiusBottomEnd="12dp"
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="2dp"
+                    app:boxStrokeColor="@color/accent_primary">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/input_id"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="아이디를 입력해주세요."
+                        android:textSize="14sp"
+                        android:fontFamily="@font/pretendard_medium"
+                        android:textColor="@color/text_primary" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- 비밀번호 입력 -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="비밀번호"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_primary"
+                    android:fontFamily="@font/pretendard_semibold"
+                    android:layout_marginBottom="8dp" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    app:boxBackgroundMode="filled"
+                    app:boxBackgroundColor="@color/background_secondary"
+                    app:boxCornerRadiusTopStart="12dp"
+                    app:boxCornerRadiusTopEnd="12dp"
+                    app:boxCornerRadiusBottomStart="12dp"
+                    app:boxCornerRadiusBottomEnd="12dp"
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="2dp"
+                    app:boxStrokeColor="@color/accent_primary"
+                    app:passwordToggleEnabled="true"
+                    app:passwordToggleTint="@color/text_secondary">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/input_pw"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="비밀번호를 입력해주세요."
+                        android:inputType="textPassword"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/pretendard_medium"
+                        android:textColor="@color/text_primary" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- 비밀번호 확인 입력 -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="비밀번호 확인"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_primary"
+                    android:fontFamily="@font/pretendard_semibold"
+                    android:layout_marginBottom="8dp" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    app:boxBackgroundMode="filled"
+                    app:boxBackgroundColor="@color/background_secondary"
+                    app:boxCornerRadiusTopStart="12dp"
+                    app:boxCornerRadiusTopEnd="12dp"
+                    app:boxCornerRadiusBottomStart="12dp"
+                    app:boxCornerRadiusBottomEnd="12dp"
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="2dp"
+                    app:boxStrokeColor="@color/accent_primary"
+                    app:passwordToggleEnabled="true"
+                    app:passwordToggleTint="@color/text_secondary">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/input_pw_re"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="비밀번호를 다시 입력해주세요."
+                        android:inputType="textPassword"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/pretendard_medium"
+                        android:textColor="@color/text_primary" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- 주민번호 입력 -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="주민번호"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_primary"
+                    android:fontFamily="@font/pretendard_semibold"
+                    android:layout_marginBottom="8dp" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    app:boxBackgroundMode="filled"
+                    app:boxBackgroundColor="@color/background_secondary"
+                    app:boxCornerRadiusTopStart="12dp"
+                    app:boxCornerRadiusTopEnd="12dp"
+                    app:boxCornerRadiusBottomStart="12dp"
+                    app:boxCornerRadiusBottomEnd="12dp"
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="2dp"
+                    app:boxStrokeColor="@color/accent_primary">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/input_rrn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="주민번호를 입력해주세요."
+                        android:inputType="number"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/pretendard_medium"
+                        android:textColor="@color/text_primary" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- 성별 선택 -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="성별"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_primary"
+                    android:fontFamily="@font/pretendard_semibold"
+                    android:layout_marginBottom="8dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="24dp">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_male"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="48dp"
+                        android:text="남성"
+                        android:textColor="@color/accent_primary"
+                        android:fontFamily="@font/pretendard_semibold"
+                        android:backgroundTint="@color/surface_primary"
+                        app:cornerRadius="12dp"
+                        app:strokeColor="@color/accent_primary"
+                        app:strokeWidth="2dp"
+                        android:layout_marginEnd="8dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_female"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="48dp"
+                        android:text="여성"
+                        android:textColor="@color/accent_primary"
+                        android:fontFamily="@font/pretendard_semibold"
+                        android:backgroundTint="@color/surface_primary"
+                        app:cornerRadius="12dp"
+                        app:strokeColor="@color/accent_primary"
+                        app:strokeWidth="2dp"
+                        android:layout_marginStart="8dp" />
+                </LinearLayout>
+
+                <!-- 다음 버튼 -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_register_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:text="다음"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/pretendard_bold"
+                    android:backgroundTint="@color/accent_primary"
+                    app:cornerRadius="12dp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
 </ScrollView>

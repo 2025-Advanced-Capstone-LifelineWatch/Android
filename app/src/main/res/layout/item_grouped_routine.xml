@@ -1,20 +1,33 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/itemContainer"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingVertical="8dp">
+    android:paddingVertical="12dp">
 
-    <!-- 시간 텍스트 -->
-    <TextView
-        android:id="@+id/tvTime"
+    <!-- 시간 헤더 -->
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="오전 8:30"
-        android:textColor="#6B21A8"
-        android:textSize="16sp"
         android:layout_marginStart="16dp"
-        android:layout_marginBottom="4dp" />
+        android:layout_marginBottom="8dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="4dp"
+        app:cardBackgroundColor="@color/accent_primary">
+
+        <TextView
+            android:id="@+id/tvTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="오전 8:30"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/pretendard_bold"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="6dp" />
+    </com.google.android.material.card.MaterialCardView>
 
     <!-- 약 카드들 동적으로 추가될 곳 -->
     <LinearLayout

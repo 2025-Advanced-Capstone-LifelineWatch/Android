@@ -1,11 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/tv_date_header"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:text="2025.05.25"
-    android:textSize="12sp"
-    android:textColor="#999999"
+    android:orientation="horizontal"
     android:gravity="center"
-    android:padding="8dp"
-    android:background="#EEEEEE" />
+    android:padding="16dp">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp"
+        app:cardBackgroundColor="@color/background_secondary">
+
+        <TextView
+            android:id="@+id/tv_date_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2025.05.25"
+            android:textSize="12sp"
+            android:textColor="@color/text_secondary"
+            android:fontFamily="@font/pretendard_medium"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="6dp" />
+    </com.google.android.material.card.MaterialCardView>
+</LinearLayout>
