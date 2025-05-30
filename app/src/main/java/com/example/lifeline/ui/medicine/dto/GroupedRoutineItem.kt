@@ -7,6 +7,6 @@ data class GroupedRoutineItem(
     val medicineNote: String,
     val times: List<String>,
     val rawTimes: List<String>,
-    val alarmIds: List<Long>
-
+    val alarmIds: List<Long>,
+    val dosage: Double
 )

@@ -47,11 +47,17 @@ class GroupedRoutineAdapter(
                 .inflate(R.layout.item_medicine_routine, holder.container, false)
 
             val tvName = view.findViewById<TextView>(R.id.tvMedicineName)
-            val tvTime = view.findViewById<TextView>(R.id.tvDosage)
+            val tvDosage = view.findViewById<TextView>(R.id.tvDosage)
             val cbTaken = view.findViewById<CheckBox>(R.id.cbTaken)
 
             tvName.text = item.medicineName
-            tvTime.text = time
+
+            tvDosage.text = if (item.dosage % 1 == 0.0) {
+                "${item.dosage.toInt()}알"
+            } else {
+                "${item.dosage}알"
+            }
+
 
             val alarmId = item.alarmIds.getOrNull(index)
             if (alarmId != null) {

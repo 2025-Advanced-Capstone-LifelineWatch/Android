@@ -29,7 +29,6 @@ class MedicineRoutineActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var addBtn: TextView
 
-    // ✅ DetailActivity 결과 콜백 등록
     private val detailActivityLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK) {
@@ -37,7 +36,6 @@ class MedicineRoutineActivity : AppCompatActivity() {
             }
         }
 
-    // ✅ RegisterActivity 결과 콜백 등록
     private val registerActivityLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK) {
@@ -116,7 +114,8 @@ class MedicineRoutineActivity : AppCompatActivity() {
                             medicineNote = group.medicineNote ?: "",
                             times = parsedTimes.map { it.first },
                             rawTimes = parsedTimes.map { it.second },
-                            alarmIds = group.alarms.mapNotNull { it.alarmId }
+                            alarmIds = group.alarms.mapNotNull { it.alarmId },
+                            dosage = group.alarms.firstOrNull()?.dosage ?: 1.0
                         )
                     }
 

@@ -15,6 +15,7 @@ import com.example.lifeline.network.RetrofitClient
 import com.example.lifeline.network.dto.RegisterMedicineRequest
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
 import java.util.*
 
 class RegisterMedicineActivity : AppCompatActivity() {
@@ -50,7 +51,6 @@ class RegisterMedicineActivity : AppCompatActivity() {
         tvCount.text = count.toString()
         renderTimePickers()
 
-        // 텍스트 변경 감지
         inputMedicineName.addTextChangedListener(textWatcher)
 
         btnPlus.setOnClickListener {
@@ -78,19 +78,26 @@ class RegisterMedicineActivity : AppCompatActivity() {
             val note = inputNote.text.toString().ifBlank { null }
 
             val times = mutableListOf<String>()
+            var dosage: Double? = null
+
             for (i in 0 until timeContainer.childCount) {
                 val itemView = timeContainer.getChildAt(i)
                 val tvTime = itemView.findViewById<TextView>(R.id.tvTime)
-                val timeText = tvTime.text.toString()
+                val tvDose = itemView.findViewById<TextView>(R.id.tvDose)
 
                 val formatted = try {
-                    val sdf = java.text.SimpleDateFormat("a h:mm", Locale.KOREAN)
-                    val parsed = sdf.parse(timeText)
-                    java.text.SimpleDateFormat("HH:mm", Locale.KOREAN).format(parsed!!)
+                    val sdf = SimpleDateFormat("a h:mm", Locale.KOREAN)
+                    val parsed = sdf.parse(tvTime.text.toString())
+                    SimpleDateFormat("HH:mm", Locale.KOREAN).format(parsed!!)
                 } catch (e: Exception) {
                     null
                 }
                 formatted?.let { times.add(it) }
+
+                // 첫 번째 복용량만 추출
+                if (dosage == null) {
+                    dosage = tvDose.text.toString().replace("알", "").toDoubleOrNull() ?: 1.0
+                }
             }
 
             if (times.isEmpty()) {
@@ -110,7 +117,8 @@ class RegisterMedicineActivity : AppCompatActivity() {
                 medicineName = name,
                 repeatCycle = repeatCycleCode,
                 medicineNote = note,
-                times = times
+                times = times,
+                dosage = dosage!!
             )
 
             lifecycleScope.launch {
@@ -119,7 +127,7 @@ class RegisterMedicineActivity : AppCompatActivity() {
                     if (response.isSuccessful) {
                         Toast.makeText(this@RegisterMedicineActivity, "등록 성공!", Toast.LENGTH_SHORT).show()
                         setResult(RESULT_OK)
-                        finish() // 이전 액티비티로 돌아감
+                        finish()
                     } else {
                         Toast.makeText(this@RegisterMedicineActivity, "등록 실패: ${response.code()}", Toast.LENGTH_SHORT).show()
                     }
@@ -128,9 +136,6 @@ class RegisterMedicineActivity : AppCompatActivity() {
                 }
             }
         }
-
-        // 초기 버튼 상태 설정
-        updateRegisterButtonState()
     }
 
     private fun renderTimePickers() {
@@ -204,13 +209,7 @@ class RegisterMedicineActivity : AppCompatActivity() {
 
     private fun updateRegisterButtonState() {
         val nameFilled = inputMedicineName.text.toString().trim().isNotEmpty()
-
-        if (nameFilled) {
-            btnRegister.isEnabled = true
-            btnRegister.setTextColor(Color.WHITE)
-        } else {
-            btnRegister.isEnabled = false
-            btnRegister.setTextColor(Color.BLACK)
-        }
+        btnRegister.isEnabled = nameFilled
+        btnRegister.setTextColor(if (nameFilled) Color.WHITE else Color.BLACK)
     }
 }

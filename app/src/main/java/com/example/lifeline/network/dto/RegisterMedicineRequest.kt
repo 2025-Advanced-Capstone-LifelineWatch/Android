@@ -4,5 +4,6 @@ data class RegisterMedicineRequest(
     val medicineName: String?,
     val repeatCycle: String,
     val medicineNote: String?,
-    val times: List<String>
+    val times: List<String>,
+    val dosage: Double,
 )

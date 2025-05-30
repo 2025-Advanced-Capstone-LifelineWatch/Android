@@ -9,7 +9,8 @@ data class AlarmGroup(
     val medicineName: String,
     val medicineNote: String?,
     val repeatCycle: String,
-    val alarms: List<Alarm>
+    val alarms: List<Alarm>,
+    val dosage: Double?
 )
 
 data class Alarm(
