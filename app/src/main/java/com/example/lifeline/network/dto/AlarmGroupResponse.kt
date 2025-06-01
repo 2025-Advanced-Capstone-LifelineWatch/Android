@@ -11,14 +11,16 @@ data class AlarmGroup(
     val repeatCycle: String,
     val alarms: List<Alarm>,
     val dosage: Double?
+
 )
 
 data class Alarm(
     val alarmId: Long,
     val elderlyId: Long,
     val medicineName: String,
-    val time: String,  // "2025-05-18T12:00:00"
+    val time: String,
     val medicineNote: String?,
     val completed: Boolean,
-    val repeatCycle: String
+    val repeatCycle: String,
+    val dosage: Double? // ✅ 추가!
 )

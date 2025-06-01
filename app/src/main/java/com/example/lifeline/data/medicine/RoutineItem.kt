@@ -5,5 +5,6 @@ data class RoutineItem(
     val name: String,
     val dose: String,
     var isTaken: Boolean,
-    val dosage: Double
+    val dosage: Double,
+    val alarmId: Long?
 )

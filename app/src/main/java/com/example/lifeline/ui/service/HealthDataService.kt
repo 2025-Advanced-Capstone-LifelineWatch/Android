@@ -113,6 +113,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
 import java.time.Instant
 import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 
 class HealthDataService : Service() {
@@ -190,18 +191,24 @@ class HealthDataService : Service() {
             return
         }
 
+        val sharedPref = getSharedPreferences("user_prefs", MODE_PRIVATE)
+        val userId = sharedPref.getInt("userId", -1)
+        val timestamp = ZonedDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
+
         val payload = JSONObject().apply {
+            put("elderlyId", userId)
             put("Heartrate", heartRate ?: JSONObject.NULL)
             put("Breathrate", breathRate ?: JSONObject.NULL)
-            put("SPO2", spo2 ?: JSONObject.NULL)
+            put("SPO2", spo2?.toString()?.replace("%", "")?.toDoubleOrNull() ?: JSONObject.NULL)
             put("Walking_steps", steps)
             put("Caloricexpenditure", calories)
+            put("timestamp", timestamp)
         }
 
         Log.d(TAG, "서버로 전송할 데이터: $payload")
 
         val request = Request.Builder()
-            .url("http://192.168.0.2:8005/predict")
+            .url("https://ai.lifewatch.store/ai/predict１")
             .post(payload.toString().toRequestBody("application/json".toMediaType()))
             .build()
 

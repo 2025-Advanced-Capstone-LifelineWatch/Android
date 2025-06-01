@@ -79,6 +79,8 @@ class RegisterMedicineActivity : AppCompatActivity() {
 
             val times = mutableListOf<String>()
             var dosage: Double? = null
+            val dosageList = mutableListOf<Double>()
+
 
             for (i in 0 until timeContainer.childCount) {
                 val itemView = timeContainer.getChildAt(i)
@@ -94,10 +96,8 @@ class RegisterMedicineActivity : AppCompatActivity() {
                 }
                 formatted?.let { times.add(it) }
 
-                // 첫 번째 복용량만 추출
-                if (dosage == null) {
-                    dosage = tvDose.text.toString().replace("알", "").toDoubleOrNull() ?: 1.0
-                }
+                val doseValue = tvDose.text.toString().replace("알", "").toDoubleOrNull() ?: 1.0
+                dosageList.add(doseValue)
             }
 
             if (times.isEmpty()) {
@@ -118,7 +118,7 @@ class RegisterMedicineActivity : AppCompatActivity() {
                 repeatCycle = repeatCycleCode,
                 medicineNote = note,
                 times = times,
-                dosage = dosage!!
+                dosage = dosageList
             )
 
             lifecycleScope.launch {

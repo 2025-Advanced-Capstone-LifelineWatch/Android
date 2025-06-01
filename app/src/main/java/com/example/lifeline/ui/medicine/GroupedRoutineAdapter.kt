@@ -52,12 +52,12 @@ class GroupedRoutineAdapter(
 
             tvName.text = item.medicineName
 
-            tvDosage.text = if (item.dosage % 1 == 0.0) {
-                "${item.dosage.toInt()}알"
+            val dose = item.dosage.getOrNull(index) ?: 1.0
+            tvDosage.text = if (dose % 1 == 0.0) {
+                "${dose.toInt()}정"
             } else {
-                "${item.dosage}알"
+                "${dose}정"
             }
-
 
             val alarmId = item.alarmIds.getOrNull(index)
             if (alarmId != null) {
@@ -104,4 +104,3 @@ class GroupedRoutineAdapter(
         return prefs.getBoolean(alarmId.toString(), false)
     }
 }
-

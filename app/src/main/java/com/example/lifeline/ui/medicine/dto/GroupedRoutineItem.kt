@@ -8,5 +8,5 @@ data class GroupedRoutineItem(
     val times: List<String>,
     val rawTimes: List<String>,
     val alarmIds: List<Long>,
-    val dosage: Double
+    val dosage: List<Double>
 )

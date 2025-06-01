@@ -12,17 +12,20 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lifeline.R
+import com.example.lifeline.data.medicine.RoutineItem
 import com.example.lifeline.network.RetrofitClient
-import com.example.lifeline.ui.medicine.dto.GroupedRoutineItem
+import com.example.lifeline.ui.medicine.dto.RoutineGroup
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.time.format.TextStyle
 import java.util.*
 
 class MedicineRoutineActivity : AppCompatActivity() {
 
+    private var selectedDate: LocalDate = LocalDate.now()
     private lateinit var tvToolbarDate: TextView
     private lateinit var btnCalendar: ImageView
     private lateinit var tvRoutineTitle: TextView
@@ -71,7 +74,7 @@ class MedicineRoutineActivity : AppCompatActivity() {
             DatePickerDialog(
                 this,
                 { _, year, month, dayOfMonth ->
-                    val selectedDate = LocalDate.of(year, month + 1, dayOfMonth)
+                    selectedDate = LocalDate.of(year, month + 1, dayOfMonth)
                     updateDate(selectedDate)
                 },
                 calendar.get(Calendar.YEAR),
@@ -88,6 +91,7 @@ class MedicineRoutineActivity : AppCompatActivity() {
         val dayOfWeek = date.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.KOREAN)
         val formattedDate = date.format(DateTimeFormatter.ofPattern("yyyy.MM.dd")) + " ($dayOfWeek)"
         tvToolbarDate.text = formattedDate
+        loadGroupedRoutines()
     }
 
     private fun loadGroupedRoutines() {
@@ -96,48 +100,93 @@ class MedicineRoutineActivity : AppCompatActivity() {
                 val response = RetrofitClient.apiService.getMedicineGroups()
                 if (response.isSuccessful) {
                     val groups = response.body()?.results ?: emptyList()
-                    val groupedItems = groups.map { group ->
-                        val parsedTimes = group.alarms.mapNotNull {
-                            try {
-                                val parsed = LocalDateTime.parse(it.time)
-                                parsed.format(DateTimeFormatter.ofPattern("a h:mm", Locale.KOREAN)) to
-                                        parsed.format(DateTimeFormatter.ofPattern("HH:mm"))
-                            } catch (e: Exception) {
-                                null
-                            }
-                        }
+                    val today = selectedDate
+                    val routineItems = groups.flatMap { group ->
+                        group.alarms
+                            .filter { alarm ->
+                                val alarmDateTime = try {
+                                    LocalDateTime.parse(alarm.time)
+                                } catch (e: Exception) {
+                                    return@filter false
+                                }
+                                val alarmDate = alarmDateTime.toLocalDate()
 
-                        GroupedRoutineItem(
-                            groupId = group.groupId,
-                            medicineName = group.medicineName,
-                            repeatCycle = group.repeatCycle,
-                            medicineNote = group.medicineNote ?: "",
-                            times = parsedTimes.map { it.first },
-                            rawTimes = parsedTimes.map { it.second },
-                            alarmIds = group.alarms.mapNotNull { it.alarmId },
-                            dosage = group.alarms.firstOrNull()?.dosage ?: 1.0
-                        )
+                                when (alarm.repeatCycle) {
+                                    "ONCE" -> alarmDate == today
+                                    "DAILY" -> true
+                                    "EVERY_OTHER_DAY" -> {
+                                        val daysDiff = java.time.temporal.ChronoUnit.DAYS.between(alarmDate, today)
+                                        daysDiff >= 0 && daysDiff % 2 == 0L
+                                    }
+                                    "WEEKLY" -> alarmDate.dayOfWeek == today.dayOfWeek
+                                    else -> false
+                                }
+                            }
+                            .mapNotNull { alarm ->
+                                val parsed = try {
+                                    LocalDateTime.parse(alarm.time)
+                                } catch (e: Exception) {
+                                    return@mapNotNull null
+                                }
+                                val displayTime = parsed.format(DateTimeFormatter.ofPattern("a h:mm", Locale.KOREAN))
+                                val dosageValue = alarm.dosage ?: return@mapNotNull null
+
+                                RoutineItem(
+                                    time = displayTime,
+                                    name = alarm.medicineName,
+                                    dose = if (dosageValue % 1 == 0.0) "${dosageValue.toInt()}정" else "${dosageValue}정",
+                                    isTaken = alarm.completed,
+                                    dosage = dosageValue,
+                                    alarmId = alarm.alarmId
+                                )
+                            }
                     }
 
-                    recyclerView.adapter = GroupedRoutineAdapter(
-                        items = groupedItems,
-                        onClick = { item ->
-                            val intent = Intent(this@MedicineRoutineActivity, MedicineDetailActivity::class.java).apply {
-                                putExtra("groupId", item.groupId)
-                                putExtra("medicineName", item.medicineName)
-                                putExtra("repeatCycle", item.repeatCycle)
-                                putExtra("medicineNote", item.medicineNote)
-                                putStringArrayListExtra("times", ArrayList(item.rawTimes))
+                    val timeFormatter = DateTimeFormatter.ofPattern("a h:mm", Locale.KOREAN)
+
+                    val grouped = routineItems.groupBy { it.time }
+                        .map { (time, list) -> RoutineGroup(time, list) }
+                        .sortedBy { runCatching { LocalTime.parse(it.time, timeFormatter) }.getOrNull() ?: LocalTime.MIDNIGHT }
+
+
+                    recyclerView.adapter = RoutineAdapter(
+                        grouped,
+                        onItemClick = { item ->
+                            val routineGroup = groups.find { group ->
+                                group.alarms.any { alarm ->
+                                    val alarmTime = try {
+                                        LocalDateTime.parse(alarm.time)
+                                    } catch (e: Exception) {
+                                        null
+                                    }
+                                    val alarmDisplayTime = alarmTime?.format(DateTimeFormatter.ofPattern("a h:mm", Locale.KOREAN))
+                                    alarm.medicineName == item.name && alarmDisplayTime == item.time
+                                }
                             }
-                            detailActivityLauncher.launch(intent)
+
+                            if (routineGroup != null) {
+                                val intent = Intent(this@MedicineRoutineActivity, MedicineDetailActivity::class.java).apply {
+                                    putExtra("groupId", routineGroup.groupId)
+                                    putExtra("medicineName", item.name)
+                                    putExtra("repeatCycle", routineGroup.repeatCycle)
+                                    putExtra("medicineNote", routineGroup.medicineNote ?: "")
+                                    putStringArrayListExtra("times", ArrayList(routineGroup.alarms.map { it.time }))
+                                    putExtra("dosageList", ArrayList(routineGroup.alarms.map { it.dosage ?: 1.0 }))
+                                }
+                                detailActivityLauncher.launch(intent)
+                            } else {
+                                Toast.makeText(this@MedicineRoutineActivity, "불러오기 실패", Toast.LENGTH_SHORT).show()
+                            }
                         },
                         scope = lifecycleScope
                     )
                 } else {
-                    Toast.makeText(this@MedicineRoutineActivity, "불러오기 실패", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@MedicineRoutineActivity, "불러오기 실패", Toast.LENGTH_SHORT)
+                        .show()
                 }
             } catch (e: Exception) {
-                Toast.makeText(this@MedicineRoutineActivity, "네트워크 오류 발생", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@MedicineRoutineActivity, "네트워크 오류 발생", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
     }

@@ -11,6 +11,7 @@ import com.example.lifeline.R
 import com.example.lifeline.network.RetrofitClient
 import com.example.lifeline.network.dto.UpdateAlarmGroupRequest
 import kotlinx.coroutines.launch
+import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -30,6 +31,7 @@ class MedicineDetailActivity : AppCompatActivity() {
     private var isEditMode = false
     private var groupId: Long = -1
     private var count = 1
+    private var currentDosageList = arrayListOf<Double>()
 
     private val repeatOptions = listOf("한 번만", "매일", "이틀에 한 번", "일주일")
 
@@ -52,6 +54,7 @@ class MedicineDetailActivity : AppCompatActivity() {
         val repeatCycle = intent.getStringExtra("repeatCycle") ?: ""
         val note = intent.getStringExtra("medicineNote") ?: ""
         val times = intent.getStringArrayListExtra("times") ?: arrayListOf()
+        currentDosageList = intent.getSerializableExtra("dosageList") as? ArrayList<Double> ?: arrayListOf()
         groupId = intent.getLongExtra("groupId", -1)
 
         inputMedicineName.setText(name)
@@ -59,7 +62,7 @@ class MedicineDetailActivity : AppCompatActivity() {
         inputNote.setText(note)
         count = times.size
         tvCount.text = count.toString()
-        renderTimePickers(times)
+        renderTimePickers(times, currentDosageList)
 
         setEditable(false)
 
@@ -71,7 +74,7 @@ class MedicineDetailActivity : AppCompatActivity() {
             if (isEditMode && count < 10) {
                 count++
                 tvCount.text = count.toString()
-                renderTimePickers((0 until count).map { "09:00" })
+                renderTimePickers((0 until count).map { "09:00" }, List(count) { 1.0 })
             }
         }
 
@@ -79,7 +82,7 @@ class MedicineDetailActivity : AppCompatActivity() {
             if (isEditMode && count > 1) {
                 count--
                 tvCount.text = count.toString()
-                renderTimePickers((0 until count).map { "09:00" })
+                renderTimePickers((0 until count).map { "09:00" }, List(count) { 1.0 })
             }
         }
 
@@ -89,17 +92,24 @@ class MedicineDetailActivity : AppCompatActivity() {
                 val updatedNote = inputNote.text.toString()
 
                 val timesFormatted = mutableListOf<String>()
+                val dosageList = mutableListOf<Double>()
+
                 for (i in 0 until timeContainer.childCount) {
                     val view = timeContainer.getChildAt(i)
                     val tvTime = view.findViewById<TextView>(R.id.tvTime)
+                    val tvDose = view.findViewById<TextView>(R.id.tvDose)
+
                     val timeText = tvTime.text.toString()
-                    val parsed = try {
+                    val parsedTime = try {
                         val time = LocalTime.parse(timeText, DateTimeFormatter.ofPattern("a h:mm", Locale.KOREAN))
                         time.format(DateTimeFormatter.ofPattern("HH:mm"))
                     } catch (e: Exception) {
                         null
                     }
-                    parsed?.let { timesFormatted.add(it) }
+                    parsedTime?.let { timesFormatted.add(it) }
+
+                    val dose = tvDose.text.toString().replace("정", "").toDoubleOrNull() ?: 1.0
+                    dosageList.add(dose)
                 }
 
                 val repeatCycleCode = when (tvRepeatCycle.text.toString().replace("섭취 요일: ", "")) {
@@ -114,7 +124,8 @@ class MedicineDetailActivity : AppCompatActivity() {
                     medicineName = updatedName,
                     repeatCycle = repeatCycleCode,
                     medicineNote = updatedNote.ifBlank { null },
-                    times = timesFormatted
+                    times = timesFormatted,
+                    dosage = dosageList
                 )
 
                 lifecycleScope.launch {
@@ -136,7 +147,6 @@ class MedicineDetailActivity : AppCompatActivity() {
                 btnEdit.text = "저장"
             }
             isEditMode = !isEditMode
-
         }
 
         btnDelete.setOnClickListener {
@@ -161,7 +171,6 @@ class MedicineDetailActivity : AppCompatActivity() {
                 }
                 .setNegativeButton("취소", null)
                 .show()
-
         }
     }
 
@@ -171,31 +180,38 @@ class MedicineDetailActivity : AppCompatActivity() {
             "DAILY" -> "매일"
             "EVERY_OTHER_DAY" -> "이틀에 한 번"
             "WEEKLY" -> "일주일"
-            else -> "매일" // 기본값
+            else -> "매일"
         }
     }
+
     private fun setEditable(editable: Boolean) {
         inputMedicineName.isEnabled = editable
         inputNote.isEnabled = editable
         tvRepeatCycle.isEnabled = editable
     }
 
-    private fun renderTimePickers(times: List<String>) {
+    private fun renderTimePickers(times: List<String>, dosageList: List<Double>) {
         timeContainer.removeAllViews()
-        for (time in times) {
+
+        times.forEachIndexed { index, time ->
             val view = layoutInflater.inflate(R.layout.item_time_dose, null)
             val tvTime = view.findViewById<TextView>(R.id.tvTime)
             val tvDose = view.findViewById<TextView>(R.id.tvDose)
 
             val localTime = try {
-                val parsed = LocalTime.parse(time, DateTimeFormatter.ofPattern("HH:mm"))
-                parsed.format(DateTimeFormatter.ofPattern("a h:mm", Locale.KOREAN))
+                val parsed = LocalDateTime.parse(time)
+                parsed.toLocalTime().format(DateTimeFormatter.ofPattern("a h:mm", Locale.KOREAN))
             } catch (e: Exception) {
                 time
             }
-
             tvTime.text = localTime
-            tvDose.text = "1정"
+
+            val doseValue = dosageList.getOrNull(index) ?: 1.0
+            tvDose.text = if (doseValue % 1 == 0.0) {
+                "${doseValue.toInt()}정"
+            } else {
+                "${doseValue}정"
+            }
 
             tvTime.setOnClickListener {
                 if (!isEditMode) return@setOnClickListener
@@ -227,7 +243,6 @@ class MedicineDetailActivity : AppCompatActivity() {
             timeContainer.addView(view)
         }
     }
-
 
     private fun showRepeatCyclePicker() {
         AlertDialog.Builder(this)
