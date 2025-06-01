@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.ui.res.colorResource
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lifeline.R
@@ -46,6 +47,17 @@ class MyPageActivity : AppCompatActivity() {
                     val intent = Intent(this, PrivacyPolicyActivity::class.java)
                     startActivity(intent)
                 }
+
+                "로그아웃" -> {
+                    val prefs = getSharedPreferences("user_prefs", MODE_PRIVATE)
+                    prefs.edit().clear().apply()
+                    Toast.makeText(this, "로그아웃 되었습니다", Toast.LENGTH_SHORT).show()
+
+                    val intent = Intent(this, com.example.lifeline.ui.main.MainActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
+                }
+
                 else -> {
                     Toast.makeText(this, "${item.text} 클릭됨", Toast.LENGTH_SHORT).show()
                 }
@@ -62,7 +74,8 @@ class MyPageActivity : AppCompatActivity() {
             MyPageItem(null, "비밀번호 변경"),
             MyPageItem(null, "새로운 소식 확인", "공지사항"),
             MyPageItem(null, "약관 내용 확인", "서비스 이용 약관"),
-            MyPageItem(null, "정보 처리 방침 확인", "개인정보 수집 및 이용")
+            MyPageItem(null, "정보 처리 방침 확인", "개인정보 수집 및 이용"),
+            MyPageItem(null, "로그아웃")
         )
     }
 }

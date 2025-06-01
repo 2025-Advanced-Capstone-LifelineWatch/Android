@@ -1,7 +1,9 @@
 package com.example.lifeline.ui.main
 
+import android.Manifest
 import android.app.AlertDialog
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +11,8 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.result.ActivityResultLauncher
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.health.connect.client.HealthConnectClient
 import androidx.health.connect.client.permission.HealthPermission
 import androidx.health.connect.client.PermissionController
@@ -22,6 +26,7 @@ import com.example.lifeline.LifelineApp
 import com.example.lifeline.service.HealthDataService
 import com.example.lifeline.R
 import com.example.lifeline.data.repository.HealthRepository
+import com.example.lifeline.ui.home.HomeActivity
 import com.example.lifeline.ui.login.LoginActivity
 import com.example.lifeline.ui.signup.SignupActivity
 import kotlinx.coroutines.CoroutineScope
@@ -55,6 +60,15 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val prefs = getSharedPreferences("user_prefs", MODE_PRIVATE)
+        val token = prefs.getString("token", null)
+
+        if (!token.isNullOrEmpty()) {
+            // 토큰이 있다면 홈 화면으로
+            val intent = Intent(this, HomeActivity::class.java)
+            startActivity(intent)
+            finish() // MainActivity 종료
+        }
         // 권한 요청 런처 등록
         requestPermissions = registerForActivityResult(
             PermissionController.createRequestPermissionResultContract()
@@ -65,6 +79,7 @@ class MainActivity : ComponentActivity() {
                 showPermissionDeniedDialog()
             }
         }
+        requestNotificationPermissionIfNeeded() // Health Connect 권한 외에 알림 권한도 요청
 
         // 헬스 커넥트 클라이언트 준비 및 권한 확인
         CoroutineScope(Dispatchers.Main).launch {
@@ -95,7 +110,7 @@ class MainActivity : ComponentActivity() {
             if (!granted.containsAll(PERMISSIONS)) {
                 requestPermissions.launch(PERMISSIONS)
             } else {
-                showInstalledPopup()
+        //        showInstalledPopup()
             }
         }
 
@@ -123,6 +138,22 @@ class MainActivity : ComponentActivity() {
             .setMessage("헬스 커넥트가 설치되어 있고, 권한이 부여되었습니다.")
             .setPositiveButton("확인") { dialog, _ -> dialog.dismiss() }
             .show()
+    }
+
+    private fun requestNotificationPermissionIfNeeded() {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.POST_NOTIFICATIONS
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                    1001
+                )
+            }
+        }
     }
 
     private fun showPermissionDeniedDialog() {

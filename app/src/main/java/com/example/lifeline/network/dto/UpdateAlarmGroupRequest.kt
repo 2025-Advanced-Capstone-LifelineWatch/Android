@@ -4,5 +4,7 @@ data class UpdateAlarmGroupRequest(
     val medicineName: String?,
     val repeatCycle: String,
     val medicineNote: String?,
-    val times: List<String>
+    val times: List<String>,
+    val dosage: List<Double>
+
 )
